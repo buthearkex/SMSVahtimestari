@@ -1,6 +1,6 @@
 package smsVahtimestari
 
-trait TemperatureTrait {
+trait TemperatureTrait extends timerTrait{
 
   def setTemperature(temperature:Int):String
   def getCurrentTemperature(): Int
