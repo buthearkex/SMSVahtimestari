@@ -1,4 +1,4 @@
-package smsVahtimestari
+package smsVahtimestari.commands
 
 import smsVahtimestari.OnOffTrait
 
@@ -8,12 +8,12 @@ object AirConditioning extends OnOffTrait {
 
 
   def status():String = {
-    
+    "asd"
   }
   
   
   def turnOnOff(status:Boolean):String = {
-    if(this.status)
+    "asd"
   }
 
   private def switch() = {
