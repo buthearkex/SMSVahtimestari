@@ -1,5 +1,6 @@
 package smsVahtimestari
 import Commands._
+import smsVahtimestari.commands.Sauna
 
 object CommandInterpreter {
 	var topic = None
