@@ -6,6 +6,7 @@ import Commands._
 object SMSVahtimestari extends App {
 	def handleMessage(msg: String) {
 		sender.send(CommandInterpreter.interpret(msg))
+		receiver.listen
 	}
 
 	val receiver: SMSReceiver = new SMSReceiver(handleMessage)
