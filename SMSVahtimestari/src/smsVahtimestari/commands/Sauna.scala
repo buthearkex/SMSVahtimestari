@@ -10,7 +10,11 @@ object Sauna extends TemperatureTrait {
 			"Luku ei kelpaa. Anna lämpötila 120-20 väliltä"
 		}
 		else{
-			"Kelpaa"
+			"Kelpaa, lämpenee "+ temperature.toString
 		}
+	}
+
+	def getCurrentTemperature(): Int = {
+		25
 	}
 }
