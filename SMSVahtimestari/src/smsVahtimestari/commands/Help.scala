@@ -6,11 +6,11 @@ object Help extends StatusTrait {
 	def status():String = {
 		"Tässäpä sinulle ohjeet: \n"+
 		"Sauna \n" +
-		" \n" +
-		" \n" +
-		" \n" +
-		" \n" +
-		" \n" +
+		"Uuni \n" +
+		"Auto \n" +
+		"Lämmitys \n" +
+		"Sähkö \n" +
+		"Ovivahti \n" +
 		" \n" +
 		" \n" +
 		" \n" +
