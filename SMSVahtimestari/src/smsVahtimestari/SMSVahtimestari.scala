@@ -1,0 +1,5 @@
+package smsVahtimestari
+
+class SMSVahtimestari {
+
+}

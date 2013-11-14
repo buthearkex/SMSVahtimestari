@@ -1,0 +1,5 @@
+package smsMocks
+
+class SMSReceiver {
+
+}
