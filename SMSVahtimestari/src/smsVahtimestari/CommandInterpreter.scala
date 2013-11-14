@@ -2,13 +2,13 @@ package smsVahtimestari
 import Commands._
 
 object CommandInterpreter {
-	var topic = None
-	
+	var topic: String = null
+
 	def interpret (msg: String): String = {
-		msg match{
-			case SAUNA => {
-				topic = SAUNA
-				Sauna.status()
+		for(value <- Commands.values) {
+			if(topic != value._1){
+				topic = value._1
+				value._2.status()
 			}
 		}
 	}
