@@ -1,12 +1,12 @@
 package smsVahtimestari.commands
 
-import smsVahtimestari.commands
+import smsVahtimestari.commands._
 import smsVahtimestari.TemperatureTrait
 
 object Sauna extends TemperatureTrait {
 	val heatingTimeMin = 45
 	val currtentTemperature = 25
-	val clock: Time = new Time()
+	val clock: Time = new Time()//MITES VIDUUS TÄS SCALAAS TEHDÄÄ OLIOIIT???
 	
 	def setTemperature(temperature: Int): String = {
 		//tutkitaan arvo
@@ -33,8 +33,6 @@ object Sauna extends TemperatureTrait {
 	def turnOnOff(status: Boolean): String = ???
 
 	def status(): String = ???
-
-	def setTimer(time: Int): String = ???
 
 	def toString = "sauna"
 }
