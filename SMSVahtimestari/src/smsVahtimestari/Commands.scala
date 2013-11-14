@@ -15,11 +15,11 @@ import smsVahtimestari.commands.Help
 import smsVahtimestari.commands.DoorGuard
 
 object Commands extends Enumeration {
-	val HELP = ("apua", Help)
-	val SAUNA = ("sauna", Sauna)
-	val OVEN = ("uuni", Oven)
-	val CAR = ("auto", Car)
-	val AC = ("lämmitys", AirConditioning)
-	val EL = ("sähkö", Electricity)
-	val DG = ("ovivahti", DoorGuard)
+	val HELP = Help
+	val SAUNA = Sauna
+	val OVEN = Oven
+	val CAR = Car
+	val AC = AirConditioning
+	val EL = Electricity
+	val DG = DoorGuard
 }
