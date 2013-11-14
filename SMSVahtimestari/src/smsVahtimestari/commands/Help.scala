@@ -14,6 +14,6 @@ object Help extends StatusTrait {
 		" \n" +
 		" \n" +
 		" \n" +
-		" \n" +
+		" \n"
 	}
 }
