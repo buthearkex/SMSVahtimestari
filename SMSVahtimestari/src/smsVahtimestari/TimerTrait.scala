@@ -1,5 +1,0 @@
-package smsVahtimestari
-
-trait TimerTrait {
-
-}
