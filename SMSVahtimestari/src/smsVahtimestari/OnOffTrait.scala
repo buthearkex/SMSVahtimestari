@@ -1,6 +1,6 @@
 package smsVahtimestari
 
-trait OnOffTrait {
+trait OnOffTrait extends StatusTrait{
 
   def turnOnOff(status:Boolean):String
 }
