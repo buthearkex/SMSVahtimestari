@@ -16,4 +16,6 @@ object Help extends StatusTrait {
 		" \n" +
 		" \n" +
 	}
+
+	def toString = "apua"
 }

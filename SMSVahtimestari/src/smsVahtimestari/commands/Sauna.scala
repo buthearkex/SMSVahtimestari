@@ -7,14 +7,13 @@ object Sauna extends TemperatureTrait {
 	val heatingTimeMin = 45
 	val currtentTemperature = 25
 	val clock: Time = new Time()
-
-	def setTemperature(temperature:Int):String = {
+	
+	def setTemperature(temperature: Int): String = {
 		//tutkitaan arvo
-		if(temperature > 120 && temperature < 20) {
+		if (temperature > 120 && temperature < 20) {
 			"Luku ei kelpaa. Anna lämpötila 120-20 väliltä"
-		}
-		else{
-			"Kelpaa, lämpenee "+ temperature.toString
+		} else {
+			"Kelpaa, lämpenee " + temperature.toString
 		}
 	}
 
@@ -30,4 +29,12 @@ object Sauna extends TemperatureTrait {
 			"Kelpaa, lämpenee valmiiksi kello " + time.toString
 		}
 	}
+
+	def turnOnOff(status: Boolean): String = ???
+
+	def status(): String = ???
+
+	def setTimer(time: Int): String = ???
+
+	def toString = "sauna"
 }

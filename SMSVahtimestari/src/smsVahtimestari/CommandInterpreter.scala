@@ -6,11 +6,26 @@ object CommandInterpreter {
 	var topic: String = null
 
 	def interpret (msg: String): String = {
-		for(value <- Commands.values) {
-			if(topic != value._1){
-				topic = value._1
-				value._2.status()
+		val wordList = msg.split(' ').map(_.toLowerCase.trim)
+		var commandToCall: StatusTrait = null
+		
+		for (cmd <- Commands.values) {
+			if (wordList.exists(_ == cmd.toString)) {
+				commandToCall = cmd
 			}
+		}
+		
+		if (commandToCall == null) {
+			Commands.HELP.status
+		}
+		
+		else if (topic != commandToCall.toString) {
+			topic = commandToCall.toString
+			commandToCall.status
+		}
+		
+		else {
+			"asd"
 		}
 	}
 }

@@ -1,23 +1,22 @@
-package smsVahtimestari
+package smsVahtimestari.commands
 
 import smsVahtimestari.OnOffTrait
 
 object AirConditioning extends OnOffTrait {
 
-  private  var isOn = false
+	private var isOn = false
 
+	def status(): String = {
+		"asd"
+	}
 
-  def status():String = {
-    
-  }
-  
-  
-  def turnOnOff(status:Boolean):String = {
-    if(this.status)
-  }
+	def turnOnOff(status: Boolean): String = {
+		"asd"
+	}
 
-  private def switch() = {
-    
-  }
+	private def switch() = {
 
+	}
+	
+	def toString = "lämmitys"
 }
