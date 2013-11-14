@@ -1,5 +1,5 @@
 package smsVahtimestari
 
-class CommandInterpreter {
+object CommandInterpreter {
 
 }
