@@ -2,7 +2,8 @@ import java.util.Calendar
 import java.text.SimpleDateFormat
 
 object Time{
-	def getMinutesTo(futureTime: String): Int = {
+	def getMinutesTo(futureTimeInt: Int): Int = {
+		var futureTime = futureTimeInt.toString
 		val currentTime = getCurrentTime
 		val currentTimeChars = currentTime.split("")
 		val futureTimeChars = futureTime.split("")

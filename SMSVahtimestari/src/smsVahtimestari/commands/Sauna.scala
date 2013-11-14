@@ -1,9 +1,13 @@
 package smsVahtimestari.commands
 
+import smsVahtimestari.commands
 import smsVahtimestari.TemperatureTrait
 
 object Sauna extends TemperatureTrait {
-	
+	val heatingTimeMin = 45
+	val currtentTemperature = 25
+	val clock: Time = new Time()
+
 	def setTemperature(temperature:Int):String = {
 		//tutkitaan arvo
 		if(temperature > 120 && temperature < 20) {
@@ -15,6 +19,15 @@ object Sauna extends TemperatureTrait {
 	}
 
 	def getCurrentTemperature(): Int = {
-		25
+		currtentTemperature
+	}
+
+	def setTimer(time:Int):String = {
+		if(clock.getMinutesTo(time)){
+			"Liian vähän aikaa, aloitetaan lämmitys nyt, valmista on... "
+		}
+		else {
+			"Kelpaa, lämpenee valmiiksi kello " + time.toString
+		}
 	}
 }
