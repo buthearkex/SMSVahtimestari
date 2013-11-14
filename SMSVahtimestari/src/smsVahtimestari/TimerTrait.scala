@@ -1,6 +1,6 @@
 package smsVahtimestari
 
-trait TimerTrait extends onOffTrait{
+trait TimerTrait extends OnOffTrait{
 
    /**
    * time in form 0000, for example 12:34 is 1234
