@@ -23,12 +23,8 @@ object Sauna extends TemperatureTrait {
 	}
 
 	def setTimer(time:Int):String = {
-		if(clock.getMinutesTo(time) > heatingTimeMin){
-			"Liian vähän aikaa, aloitetaan lämmitys nyt, valmista on... "
-		}
-		else {
-			"Kelpaa, lämpenee valmiiksi kello " + time.toString
-		}
+		if(clock.getMinutesTo(time) > heatingTimeMin)"Liian vähän aikaa, aloitetaan lämmitys nyt, valmista on... "
+		else "Kelpaa, lämpenee valmiiksi kello " + time.toString
 	}
 
 	def turnOnOff(status: Boolean): String = {
