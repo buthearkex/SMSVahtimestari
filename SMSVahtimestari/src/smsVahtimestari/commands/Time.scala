@@ -1,3 +1,4 @@
+package smsVahtimestari.commands
 import java.util.Calendar
 import java.text.SimpleDateFormat
 
