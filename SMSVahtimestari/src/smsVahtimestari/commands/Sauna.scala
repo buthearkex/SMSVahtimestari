@@ -6,7 +6,8 @@ import smsVahtimestari.TemperatureTrait
 object Sauna extends TemperatureTrait {
 	val heatingTimeMin = 45
 	val currtentTemperature = 25
-	val clock: Time = new Time()//MITES VIDUUS TÄS SCALAAS TEHDÄÄ OLIOIIT???
+	val clock = new Time()//MITES VIDUUS TÄS SCALAAS TEHDÄÄ OLIOIIT???
+	var isOn = false
 	
 	def setTemperature(temperature: Int): String = {
 		//tutkitaan arvo
@@ -22,7 +23,7 @@ object Sauna extends TemperatureTrait {
 	}
 
 	def setTimer(time:Int):String = {
-		if(clock.getMinutesTo(time)){
+		if(clock.getMinutesTo(time) > heatingTimeMin){
 			"Liian vähän aikaa, aloitetaan lämmitys nyt, valmista on... "
 		}
 		else {
@@ -30,9 +31,17 @@ object Sauna extends TemperatureTrait {
 		}
 	}
 
-	def turnOnOff(status: Boolean): String = ???
+	def turnOnOff(status: Boolean): String = {
+		if(isOn && status) "kiuas on jo päällä" 
+		else if(isOn) "kiuas sammutetaan" isOn = false 
+		else if(status)"kiuas lämmitetään" isOn = true
+		else "kiuas ei ollut päällä" 
+	}
 
-	def status(): String = ???
+	def status(): String = {
+		if(isOn) "Sauna on lämpenemässä ja sen lämpö on nyt " + currtentTemperature.toString
+		else "Sauna ei ole päällä ja sen lämpö on nyt " + currtentTemperature.toString
+	}
 
 	def toString = "sauna"
 }
