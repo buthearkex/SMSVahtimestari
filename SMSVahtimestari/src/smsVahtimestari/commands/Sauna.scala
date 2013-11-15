@@ -29,8 +29,14 @@ object Sauna extends TemperatureTrait {
 
 	def turnOnOff(status: Boolean): String = {
 		if(isOn && status) "kiuas on jo päällä" 
-		else if(isOn) "kiuas sammutetaan" isOn = false 
-		else if(status)"kiuas lämmitetään" isOn = true
+		else if(isOn){ 
+			isOn = false 
+			"kiuas sammutetaan"  
+		}
+		else if(status){ 
+			isOn = true 
+			"kiuas lämmitetään" 
+		}
 		else "kiuas ei ollut päällä" 
 	}
 

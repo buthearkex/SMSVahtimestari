@@ -7,8 +7,14 @@ object DoorGuard extends OnOffTrait {
 
 	def turnOnOff(status: Boolean): String = {
 		if(isOn && status) "Ovivahti on jo päällä" 
-		else if(isOn) "Ovivahti sammutetaan" isOn = false 
-		else if(status)"Ovivahti päälle" isOn = true
+		else if(isOn){ 
+			isOn = false 
+			"Ovivahti sammutetaan" 
+		}
+		else if(status){ 
+			isOn = true 
+			"Ovivahti päälle"
+		}
 		else "Ovivahti ei ollut päällä" 
 	}
 

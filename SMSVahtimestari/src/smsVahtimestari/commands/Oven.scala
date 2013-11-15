@@ -3,11 +3,12 @@ package smsVahtimestari.commands
 import smsVahtimestari.TemperatureTrait
 
 object Oven extends TemperatureTrait {
+	val heatingTimeMin = 15
+	val currtentTemperature = 25
+	val clock = new Time()//MITES VIDUUS TÄS SCALAAS TEHDÄÄ OLIOIIT???
+	var isOn = false	
+	
 	def setTemperature(temperature: Int): String = {
-		val heatingTimeMin = 15
-		val currtentTemperature = 25
-		val clock = new Time()//MITES VIDUUS TÄS SCALAAS TEHDÄÄ OLIOIIT???
-		var isOn = false
 		//tutkitaan arvo
 		if (temperature > 300 && temperature < 20) {
 			"Luku ei kelpaa. Anna lämpötila 300-20 väliltä"
@@ -22,8 +23,14 @@ object Oven extends TemperatureTrait {
 
 	def turnOnOff(status: Boolean): String = {
 		if(isOn && status) "Uuni on jo päällä" 
-		else if(isOn) "Uuni sammutetaan" isOn = false 
-		else if(status)"Uuni lämmitetään" isOn = true
+		else if(isOn){ 
+			isOn = false 
+			"Uuni sammutetaan" 
+		}
+		else if(status){ 
+			isOn = true 
+			"Uuni lämmitetään"
+		}
 		else "Uuni ei ollut päällä" 
 	}
 

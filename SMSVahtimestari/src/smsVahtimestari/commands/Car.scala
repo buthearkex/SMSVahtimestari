@@ -9,8 +9,14 @@ object Car extends TimerTrait {
 
 	def turnOnOff(status: Boolean): String = {
 		if(isOn && status) "Auton lämmitys on jo päällä" 
-		else if(isOn) "Auton lämmitys sammutetaan" isOn = false 
-		else if(status)"Auton lämmitys lämmitetään" isOn = true
+		else if(isOn){ 
+			isOn = false 
+			"Auton lämmitys sammutetaan"  
+		}
+		else if(status){ 
+			isOn = true 
+			"Auton lämmitys lämmitetään" 
+		}
 		else "Auton lämmitys ei ollut päällä" 
 	}
 
