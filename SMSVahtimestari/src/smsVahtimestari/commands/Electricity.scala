@@ -8,5 +8,5 @@ object Electricity extends StatusTrait {
 
 	def status(): String = "Sähköä kuluu nyt "+ elConsumption.toString +"Wattia"
 
-	def toString = "sähkö"
+	override def toString = "sähkö"
 }

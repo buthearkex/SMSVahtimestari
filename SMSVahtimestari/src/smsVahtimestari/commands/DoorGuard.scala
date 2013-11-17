@@ -23,5 +23,5 @@ object DoorGuard extends OnOffTrait {
 		else "Ovivahti pois päältä"
 	}
 
-	def toString = "ovivahti"
+	override def toString = "ovivahti"
 }

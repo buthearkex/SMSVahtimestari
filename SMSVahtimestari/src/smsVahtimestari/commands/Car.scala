@@ -30,5 +30,5 @@ object Car extends TimerTrait {
 		else "Kelpaa, lämpenee valmiiksi kello " + time.toString
 	}
 	
-	def toString = "auto"
+	override def toString = "auto"
 }

@@ -25,5 +25,5 @@ object AirConditioning extends OnOffTrait {
 		else "Ilmastointi ei ollut päällä" 
 	}
 	
-	def toString = "lämmitys"
+	override def toString = "lämmitys"
 }

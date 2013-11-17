@@ -45,5 +45,5 @@ object Sauna extends TemperatureTrait {
 		else "Sauna ei ole päällä ja sen lämpö on nyt " + currtentTemperature.toString
 	}
 
-	def toString = "sauna"
+	override def toString = "sauna"
 }

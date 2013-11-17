@@ -44,5 +44,5 @@ object Oven extends TemperatureTrait {
 		else "Kelpaa, lämpenee valmiiksi kello " + time.toString
 	}
 
-	def toString = "uuni"
+	override def toString = "uuni"
 }

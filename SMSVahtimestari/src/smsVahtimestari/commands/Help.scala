@@ -10,12 +10,8 @@ object Help extends StatusTrait {
 		"Auto \n" +
 		"Lämmitys \n" +
 		"Sähkö \n" +
-		"Ovivahti \n" +
-		" \n" +
-		" \n" +
-		" \n" +
-		" \n" 
+		"Ovivahti"
 	}
 
-	def toString = "apua"
+	override def toString = "apua"
 }

@@ -9,14 +9,14 @@ object CommandInterpreter {
 		val wordList = msg.split(' ').map(_.toLowerCase.trim)
 		var commandToCall: StatusTrait = null
 		
-		for (cmd <- Commands.values) {
+		for (cmd <- Commands.list) {
 			if (wordList.exists(_ == cmd.toString)) {
 				commandToCall = cmd
 			}
 		}
 		
 		if (commandToCall == null) {
-			Commands.HELP.status
+			commands.Help.status
 		}
 		
 		else if (topic != commandToCall.toString) {

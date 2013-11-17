@@ -9,10 +9,10 @@ object SMSVahtimestari extends App {
 		receiver.listen
 	}
 
-	val receiver: SMSReceiver = new SMSReceiver(handleMessage)
-	val sender: SMSSender = new SMSSender
+	val receiver = new SMSReceiver(handleMessage)
+	val sender = new SMSSender
 
-	println("SMSVahtimestari on päällä. Lähetä käsky " + HELP + " mikäli tarvitset apua käytässä.")
+	println("SMSVahtimestari on päällä. Lähetä käsky " + commands.Help + " mikäli tarvitset apua käytässä.")
 
 	receiver.listen
 }
