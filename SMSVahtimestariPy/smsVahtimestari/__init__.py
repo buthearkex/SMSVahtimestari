@@ -1,38 +1,43 @@
 from smsMocks import *
 from smsVahtimestari.commands import *
 
-class SMSVahtimestari():
-    commands = [Help(), Sauna(), Oven(), Car(), AirConditioning(), Electricity(), DoorGuard()]
-    commandInterpreter = SMSVahtimestari.CommandInterpreter()
 
-    def __init__(self):
-        self.receiver = SMSReceiver(self.handleMessage)
-        self.sender = SMSSender()
-        print("SMSVahtimestari on päällä. Lähetä käsky " + SMSVahtimestari.commands[0] + " mikäli tarvitset apua käytässä.\n")
-        self.receiver.listen()
-
-    def handleMessage(self, msg):
-        self.sender.send(SMSVahtimestari.commandInterpreter.interpret(msg))
-        self.receiver.listen()
-
-class CommandInterpreter():
+class CommandInterpreter:
     
     def __init__(self):
         self.topic = ""
 
     def interpret(self, msg):
-        wordList = msg.split(' ').map(_.toLowerCase.trim)
+        wordList = msg.split(' ')
+        for idx, word in enumerate(wordList):
+            word.lower()
+            word.strip()
+            wordList[idx] = word
         commandToCall = None
         for cmd in SMSVahtimestari.commands:
-            if (wordList.exists(_ == cmd.toString)):
+            if (str(cmd) in wordList):
                 commandToCall = cmd
         if (commandToCall == None):
-            SMSVahtimestari.commands[0].status()
-        elif (self.topic != commandToCall.toString):
-            self.topic = commandToCall.toString
-            commandToCall.status()
+            return SMSVahtimestari.commands[0].status()
+        elif (self.topic != str(commandToCall)):
+            self.topic = str(commandToCall)
+            return commandToCall.status()
         else:
-            "asd"
+            return "asd"
+
+class SMSVahtimestari:
+    commands = [Help(), Sauna(), Oven(), Car(), AirConditioning(), Electricity(), DoorGuard()]
+    commandInterpreter = CommandInterpreter()
+
+    def __init__(self):
+        self.receiver = SMSReceiver(self.handleMessage)
+        self.sender = SMSSender()
+        print("SMSVahtimestari on päällä. Lähetä käsky " + str(SMSVahtimestari.commands[0]) + " mikäli tarvitset apua käytässä.\n")
+        self.receiver.listen()
+
+    def handleMessage(self, msg):
+        self.sender.send(SMSVahtimestari.commandInterpreter.interpret(msg))
+        self.receiver.listen()
 
 if __name__ == "__main__":
     SMSVahtimestari()

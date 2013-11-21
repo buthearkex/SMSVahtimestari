@@ -1,14 +1,14 @@
 import random
 import datetime
 
-class AirConditioning():
+class AirConditioning:
     
     def __init__(self):
         self._isOn = False
         self.currentTemperature = 25
     
     def status(self):
-        temp = "Asunnon lämpötila on nyt " + self.currentTemperature
+        temp = "Asunnon lämpötila on nyt " + str(self.currentTemperature)
         if (self.isOn):
             temp += " ja ilmastointi on päällä"
         else:
@@ -30,7 +30,7 @@ class AirConditioning():
     def __str__(self):
         return "lämmitys"
         
-class Car():
+class Car:
     
     def __init__(self):
         self.heatingTimeMin = datetime.timedelta(minutes=15)
@@ -64,13 +64,13 @@ class Car():
         if (realDiff < 0):
             return "Liian vähän aikaa, aloitetaan lämmitys nyt, valmista on... "
         else:
-            return "Kelpaa, lämpenee valmiiksi kello " + hours + ":" + minutes
+            return "Kelpaa, lämpenee valmiiksi kello " + str(hours) + ":" + str(minutes)
     
     def __str__(self):
         return "auto"
 
 
-class DoorGuard():
+class DoorGuard:
     
     def __init__(self):
         self.isOn = False
@@ -97,19 +97,19 @@ class DoorGuard():
         return "ovivahti"
         
 
-class Electricity():
+class Electricity:
     
     def __init(self):
         self.elConsumption = random.randint(200, 1000)
 
     def status(self):
-        return "Sähköä kuluu nyt " + self.elConsumption + "Wattia"
+        return "Sähköä kuluu nyt " + str(self.elConsumption) + "Wattia"
 
     def __str__(self):
         return "sähkö"
 
 
-class Help():
+class Help:
     
     def status(self):
         return "Tässäpä sinulle ohjeet: \n" + "Sauna \n" + "Uuni \n" + "Auto \n" + "Lämmitys \n" + "Sähkö \n" + "Ovivahti"
@@ -118,7 +118,7 @@ class Help():
         return "apua"
 
     
-class Sauna():
+class Sauna:
     
     def __init__(self):
         self.heatingTimeMin = datetime.timedelta(minutes = 45)
@@ -130,7 +130,7 @@ class Sauna():
         if (temperature > 120 and temperature < 20):
             return "Luku ei kelpaa. Anna lämpötila 120-20 väliltä"
         else:
-            return "Kelpaa, lämpenee " + temperature
+            return "Kelpaa, lämpenee " + str(temperature)
 
     def getCurrentTemperature(self):
         return self.currentTemperature
@@ -144,7 +144,7 @@ class Sauna():
         if (realDiff < 0):
             return "Liian vähän aikaa, aloitetaan lämmitys nyt, valmista on... "
         else:
-            return "Kelpaa, lämpenee valmiiksi kello " + hours + ":" + minutes
+            return "Kelpaa, lämpenee valmiiksi kello " + str(hours) + ":" + str(minutes)
 
     def turnOnOff(self, onOff):
         if (self.isOn and onOff):
@@ -160,14 +160,14 @@ class Sauna():
 
     def status(self):
         if(self.isOn):
-            return "Sauna on lämpenemässä ja sen lämpö on nyt " + self.currentTemperature
+            return "Sauna on lämpenemässä ja sen lämpö on nyt " + str(self.currentTemperature)
         else:
-            return "Sauna ei ole päällä ja sen lämpö on nyt " + self.currentTemperature
+            return "Sauna ei ole päällä ja sen lämpö on nyt " + str(self.currentTemperature)
 
     def __str__(self):
         return "sauna"
     
-class Oven():
+class Oven:
     
     def __init__(self):
         self.heatingTimeMin = datetime.timedelta(minutes = 45)
@@ -179,7 +179,7 @@ class Oven():
         if (temperature > 120 and temperature < 20):
             return "Luku ei kelpaa. Anna lämpötila 300-20 väliltä"
         else:
-            return "Kelpaa, lämpenee " + temperature
+            return "Kelpaa, lämpenee " + str(temperature)
 
     def getCurrentTemperature(self):
         return self.currentTemperature
@@ -193,7 +193,7 @@ class Oven():
         if (realDiff < 0):
             return "Liian vähän aikaa, aloitetaan lämmitys nyt, valmista on... "
         else:
-            return "Kelpaa, lämpenee valmiiksi kello " + hours + ":" + minutes
+            return "Kelpaa, lämpenee valmiiksi kello " + str(hours) + ":" + str(minutes)
 
     def turnOnOff(self, onOff):
         if (self.isOn and onOff):
