@@ -7,7 +7,8 @@ class CommandInterpreter:
     def __init__(self):
         self.topic = ""
         self.dialogueIsOn = False
-        self.freakingRealTopic = None
+        self.activeTopic = None
+        self.stateLAITATASTAENUMI = 0
 
     def interpret(self, msg):
         #prosessoi viestin osiin ja yhtenäistaa muotoilun
@@ -16,9 +17,39 @@ class CommandInterpreter:
             word.lower()
             word.strip()
             wordList[idx] = word
+
+        #alkutilanne
+        if activeTopic is None:
+        commandToCall = None
+        for cmd in SMSVahtimestari.commands:
+            if (str(cmd) in wordList):
+                commandToCall = cmd
+        else:
+            if self.stateLAITATASTAENUMI = 
+
+
+        if (self.topic != str(commandToCall)):
+            self.topic = str(commandToCall)
+            self.activeTopic = commandToCall
+            
+            #ei enää alkutilanne
+
+        if #ei enää alkutilanne
+            return self.activeTopic.status()# laitetaanko päälle
+
+        elif#
+
+        if self.activeTopic.howManyParameters() < self.stateLAITATASTAENUMI:
+
+
+
+
+
+        
+
         if self.dialogueIsOn:
                 #tassa vaiheessa kaskee asian päälle jos paasee tanne asti
-                return "dialogia: " + self.freakingRealTopic.turnOnOff(True)
+                return "dialogia: " + self.activeTopic.turnOnOff(True)
         else:
             #jos viestissa ja kaskyissa on jokin sama niin muutetaan comentoa cutsuttavaa
             #MUTTA EI SE SITÄ VOI TEHDÄ JOKA KERTA TAI MUUTEN EI TUU DIALOGIA
@@ -33,7 +64,7 @@ class CommandInterpreter:
             #kutsutaan kesken kaiken toista topikkia
             elif (self.topic != str(commandToCall)):
                 self.topic = str(commandToCall)
-                self.freakingRealTopic = commandToCall
+                self.activeTopic = commandToCall
                 return commandToCall.status()
 
             else:
