@@ -10,22 +10,63 @@ class CommandInterpreter:
         self.activeTopic = None
         self.stateLAITATASTAENUMI = 0
 
-    def interpret(self, msg):
+    def isPositive(self, msg):
         #prosessoi viestin osiin ja yhtenäistaa muotoilun
         wordList = msg.split(' ')
         for idx, word in enumerate(wordList):
             word.lower()
             word.strip()
             wordList[idx] = word
+        #mystinen logiikka
+        return True
 
-        #alkutilanne
-        if activeTopic is None:
+    def giveTopic(self, msg):
         commandToCall = None
         for cmd in SMSVahtimestari.commands:
             if (str(cmd) in wordList):
                 commandToCall = cmd
+
+
+    def interpret(self, msg):
+        #alkutilanne
+        if activeTopic is None:
+            #hommaa actiivinen topikki
         else:
-            if self.stateLAITATASTAENUMI = 
+            self.activeTopic.status()
+
+            #tulkitaan msg
+
+            self.activeTopic.turnOnOff()
+            self.activeTopic.setTimer()
+
+            #katsotaan että temp on hyvä
+            temp = msg
+            self.activeTopic.setTemperature(temp)
+
+
+    def tassa on vaan roskakoodia():
+            # topikki on valittu
+            elif self.stateLAITATASTAENUMI = 0 and self.activeTopic.howManyParameters() >= 0:
+                self.activeTopic.status()
+                #esitetään kysymys
+                if self.isPositive():
+                    stateLAITATASTAENUMI = 1
+
+            # päälle pois valittu
+            elif self.stateLAITATASTAENUMI = 1 and self.activeTopic.howManyParameters() >= 1:
+                self.activeTopic.turnOnOff()
+                #esitetään kysymys
+                if self.answerWasGiven:
+
+            # aika on valittu
+            elif self.stateLAITATASTAENUMI = 2 and self.activeTopic.howManyParameters() >= 2:
+                self.activeTopic.setTimer()
+                #esitetään kysymys
+                if self.answerWasGiven:
+
+            # lämpö on valittu
+            elif self.stateLAITATASTAENUMI = 3 and self.activeTopic.howManyParameters() >= 3:
+                self.activeTopic.setTemperature()
 
 
         if (self.topic != str(commandToCall)):
@@ -70,39 +111,6 @@ class CommandInterpreter:
             else:
                 self.dialogueIsOn = True
 
-
-'''
-Tällänen koodihahmotelma dialogin uudesta logiikasta
-
-if topikki on aktiivinen && toista topikkia ei tullut
-    kysy seuraava()
-
-self.monesko
-def kysy seuraava():
-    self.monesko += 1
-    if topic.has(self.monesko):
-        topic.ask(self.monesko):
-
-# sillä välin topikissa
-def ask(monesko):
-    case 0: status
-        # INPUT: - None
-            # OUTPUT: status
-            # OUTPUT: laitetaanko päälle?
-    case 1: päällePois
-        # INPUT: joo / ei
-            # OUTPUT: päivitetty status TAI
-            # OUTPUT: mihin aikaan?
-    case 3: ajastin
-        # INPUT: XXXX integer
-            # OUTPUT: päivitetty status TAI
-            # OUTPUT: mihin lämpöön?
-    case 4: lämpöön
-        # INPUT: integer
-        # OUTPUT: päivitetty status 
-
-'''
-
 class SMSVahtimestari:
     commands = [Help(), Sauna(), Oven(), Car(), AirConditioning(), Electricity(), DoorGuard()]
     commandInterpreter = CommandInterpreter()
@@ -110,7 +118,8 @@ class SMSVahtimestari:
     def __init__(self):
         self.receiver = SMSReceiver(self.handleMessage)
         self.sender = SMSSender()
-        print("SMSVahtimestari on päällä. Lähetä käsky " + str(SMSVahtimestari.commands[0]) + " mikäli tarvitset apua käytässä.\n")
+        #ei printtiä  alkuun, koska tekstareissa ei silleen
+        #print("SMSVahtimestari on päällä. Lähetä käsky " + str(SMSVahtimestari.commands[0]) + " mikäli tarvitset apua käytässä.\n")
         self.receiver.listen()
 
     def handleMessage(self, msg):
