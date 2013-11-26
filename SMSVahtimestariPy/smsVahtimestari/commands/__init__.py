@@ -3,7 +3,7 @@ import datetime
 
 class AirConditioning:
 
-    def howDeepIsInterception():
+    def howManyParameters():
         return 1
     
     def __init__(self):
@@ -35,8 +35,8 @@ class AirConditioning:
         
 class Car:
 
-    def howDeepIsInterception():
-        return 1
+    def howManyParameters():
+        return 2
     
     def __init__(self):
         self.heatingTimeMin = datetime.timedelta(minutes=15)
@@ -78,7 +78,7 @@ class Car:
 
 class DoorGuard:
 
-    def howDeepIsInterception():
+    def howManyParameters():
         return 1
     
     def __init__(self):
@@ -108,8 +108,8 @@ class DoorGuard:
 
 class Electricity:
 
-    def howDeepIsInterception():
-        return 1
+    def howManyParameters():
+        return 0
     
     def __init(self):
         self.elConsumption = random.randint(200, 1000)
@@ -123,8 +123,8 @@ class Electricity:
 
 class Help:
 
-    def howDeepIsInterception():
-        return 1
+    def howManyParameters():
+        return 0
     
     def status(self):
         return "Tässäpä sinulle ohjeet: \n" + "Sauna \n" + "Uuni \n" + "Auto \n" + "Lämmitys \n" + "Sähkö \n" + "Ovivahti"
@@ -135,8 +135,8 @@ class Help:
     
 class Sauna:
 
-    def howDeepIsInterception():
-        return 1
+    def howManyParameters():
+        return 3
     
     def __init__(self):
         self.heatingTimeMin = datetime.timedelta(minutes = 45)
@@ -187,8 +187,8 @@ class Sauna:
     
 class Oven:
 
-    def howDeepIsInterception():
-        return 1
+    def howManyParameters():
+        return 3
     
     def __init__(self):
         self.heatingTimeMin = datetime.timedelta(minutes = 45)
