@@ -143,12 +143,13 @@ class Sauna:
         self.currentTemperature = 25
         self.clock = datetime.datetime.now()
         self.isOn = False
+        self.warmAt = 0,0
     
     def setTemperature(self, temperature):
-        if (temperature > 120 and temperature < 20):
-            return "Luku ei kelpaa. Anna lämpötila 120-20 väliltä"
+        if (temperature > 120 and temperature < 40):
+            return "Anna luku väliltä 40-120"
         else:
-            return "Kelpaa, lämpenee " + str(temperature)
+            return "Sauna lämpötilassa " + str(temperature) + " klo " + 
 
     def getCurrentTemperature(self):
         return self.currentTemperature
@@ -160,9 +161,12 @@ class Sauna:
         diff = datetime.timedelta(self.clock, datetime.datetime(year, month, day, hours, minutes))
         realDiff = self.heatingTimeMin - diff
         if (realDiff < 0):
-            return "Liian vähän aikaa, aloitetaan lämmitys nyt, valmista on... "
+            return "Sauna ei ehdi lämmetä ajoissa, mutta lämmitys aloitetaan."
         else:
-            return "Kelpaa, lämpenee valmiiksi kello " + str(hours) + ":" + str(minutes)
+            self.isOn = True
+            warmAt = hours, minutes
+            return "Mihin lämpötilaan?"
+
 
     def turnOnOff(self, onOff):
         if (self.isOn and onOff):
