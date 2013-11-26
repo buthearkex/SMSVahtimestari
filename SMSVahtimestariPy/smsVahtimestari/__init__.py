@@ -6,6 +6,8 @@ class CommandInterpreter:
     
     def __init__(self):
         self.topic = ""
+        self.dialogueIsOn = False
+        self.freakingRealTopic = None
 
     def interpret(self, msg):
         #prosessoi viestin osiin ja yhtenäistaa muotoilun
@@ -14,26 +16,29 @@ class CommandInterpreter:
             word.lower()
             word.strip()
             wordList[idx] = word
-
-        #jos viestissa ja kaskyissa on jokin sama niin muutetaan comentoa cutsuttavaa
-        #MUTTA EI SE SITÄ VOI TEHDÄ JOKA KERTA TAI MUUTEN EI TUU DIALOGIA
-        commandToCall = None
-        for cmd in SMSVahtimestari.commands:
-            if (str(cmd) in wordList):
-                commandToCall = cmd
-
-        #jos asiasanaa ei loytynyt listasta
-        if (commandToCall == None):
-            return SMSVahtimestari.commands[0].status()
-        #kutsutaan kesken kaiken toista topikkia
-        elif (self.topic != str(commandToCall)):
-            self.topic = str(commandToCall)
-            return commandToCall.status()
-
-        #varsinainen dialogi alkaa tasta
+        if self.dialogueIsOn:
+                #tassa vaiheessa kaskee asian päälle jos paasee tanne asti
+                return "dialogia: " + self.freakingRealTopic.turnOnOff(True)
         else:
-            #tassa vaiheessa kaskee saunan lampenemaan jos paasee tanne asti
-            return "aasd" + Sauna().turnOnOff(True)
+            #jos viestissa ja kaskyissa on jokin sama niin muutetaan comentoa cutsuttavaa
+            #MUTTA EI SE SITÄ VOI TEHDÄ JOKA KERTA TAI MUUTEN EI TUU DIALOGIA
+            commandToCall = None
+            for cmd in SMSVahtimestari.commands:
+                if (str(cmd) in wordList):
+                    commandToCall = cmd
+
+            #jos asiasanaa ei loytynyt listasta
+            if (commandToCall == None):
+                return SMSVahtimestari.commands[0].status()
+            #kutsutaan kesken kaiken toista topikkia
+            elif (self.topic != str(commandToCall)):
+                self.topic = str(commandToCall)
+                self.freakingRealTopic = commandToCall
+                return commandToCall.status()
+
+            else:
+                self.dialogueIsOn = True
+
 
 '''
 Tällänen koodihahmotelma dialogin uudesta logiikasta
