@@ -22,15 +22,15 @@ class CommandInterpreter:
         #mystinen logiikka
         self.activeTopic = Sauna()
 
-    def self.giveHours(msg):
+    def giveHours(msg):
         #mystinen logiikka
         return 20
 
-    def self.giveMinutes(msg):
+    def giveMinutes(msg):
         #mystinen logiikka
         return 20
 
-    def self.giveTemperature(msg):
+    def giveTemperature(msg):
         #mystinen logiikka
         return 80
 
