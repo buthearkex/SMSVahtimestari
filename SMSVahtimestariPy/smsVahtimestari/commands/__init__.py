@@ -209,9 +209,9 @@ class Oven:
 
     def status(self):
         if(self.isOn):
-            return "Uuno on lämpenemässä ja sen lämpö on nyt " + self.currentTemperature
+            return "uuni on lämpenemässä ja sen lämpö on nyt " + str(self.currentTemperature)
         else:
-            return "Uuno ei ole päällä ja sen lämpö on nyt " + self.currentTemperature
+            return "uuni ei ole päällä ja sen lämpö on nyt " + str(self.currentTemperature)
 
     def __str__(self):
         return "uuni"
