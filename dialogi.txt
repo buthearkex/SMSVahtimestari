@@ -1,0 +1,45 @@
+DEFAULT (SAUNA TAI UUNI)
+
+sauna
+	laitetaanko sauna päälle?
+laita päälle/k/kyllä/joo
+	mihin kellonaikaan?
+2115/21:15/21.15/700 jne...
+	mihin lämpötilaan?
+80
+	sauna lämpötilassa 80 klo 2115
+
+
+sauna
+	sauna on päällä 80 C
+sammuta/pois
+	sauna on sammutettu
+
+
+BUGIT
+================================================
+sauna
+	laitetaanko sauna päälle?
+asdasdasdasd
+	laita päälle antamalla komento "kyllä"
+
+------------------------------------------------
+
+	mihin kellonaikaan?
+3pm
+	anna kellonaika muodossa hhmm (esim. 1200)
+1600
+	sauna ei ehdi lämmetä ajoissa,
+	mutta lämmitys aloitetaan
+
+------------------------------------------------
+
+	mihin lämpötilaan?
+10 asd
+	anna luku väliltä 40-120
+
+------------------------------------------------
+
+	sauna päällä 80 C
+sprölöllööl
+	sammuta sauna komennolla "sammuta"
