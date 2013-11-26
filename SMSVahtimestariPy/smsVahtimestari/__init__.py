@@ -35,6 +35,38 @@ class CommandInterpreter:
             #tassa vaiheessa kaskee saunan lampenemaan jos paasee tanne asti
             return "aasd" + Sauna().turnOnOff(True)
 
+'''
+Tällänen koodihahmotelma dialogin uudesta logiikasta
+
+if topikki on aktiivinen && toista topikkia ei tullut
+    kysy seuraava()
+
+self.monesko
+def kysy seuraava():
+    self.monesko += 1
+    if topic.has(self.monesko):
+        topic.ask(self.monesko):
+
+# sillä välin topikissa
+def ask(monesko):
+    case 0: status
+        # INPUT: - None
+            # OUTPUT: status
+            # OUTPUT: laitetaanko päälle?
+    case 1: päällePois
+        # INPUT: joo / ei
+            # OUTPUT: päivitetty status TAI
+            # OUTPUT: mihin aikaan?
+    case 3: ajastin
+        # INPUT: XXXX integer
+            # OUTPUT: päivitetty status TAI
+            # OUTPUT: mihin lämpöön?
+    case 4: lämpöön
+        # INPUT: integer
+        # OUTPUT: päivitetty status 
+
+'''
+
 class SMSVahtimestari:
     commands = [Help(), Sauna(), Oven(), Car(), AirConditioning(), Electricity(), DoorGuard()]
     commandInterpreter = CommandInterpreter()
