@@ -8,43 +8,121 @@ class CommandInterpreter:
         self.topic = ""
         self.dialogueIsOn = False
         self.activeTopic = None
-        self.stateLAITATASTAENUMI = 0
+        self.questionNumber = 0
 
     def isPositive(self, msg):
+        #mystinen logiikka
+        return True
+
+    def isLopeta(self, msg):
+        #mystinen logiikka
+        return False
+
+    def giveTopic(self, msg):
+        #mystinen logiikka
+        self.activeTopic = Sauna()
+
+    def self.giveHours(msg):
+        #mystinen logiikka
+        return 20
+
+    def self.giveMinutes(msg):
+        #mystinen logiikka
+        return 20
+
+    def self.giveTemperature(msg):
+        #mystinen logiikka
+        return 80
+
+
+    def activeTopicHasNextQuestion():
+        if self.questionNumber <= self.activeTopic.howManyParameters():
+            return True
+        return False
+
+    '''
+    saa käyttäjän viestin sellaisenaan ilman aiempia muokkauksia
+    pyörittää dialogin logiikkaa = controller
+    palauttaa dialogin toisen puolen takaisinpäin
+    
+    '''
+    def interpret(self, msg):
+        palautettavaString = ""
+
+        #alkutilanne
+        if activeTopic is None:
+            #hommaa actiivisen topikin
+            self.giveTopic(msg)
+        else:
+            if self.activeTopicHasNextQuestion(): 
+                #kysytään seuraavat kysymykset tässä järjestyksessä
+                #status
+                if self.questionNumber = 0:
+                    palautettavaString = self.activeTopic.status()
+                #on/off
+                elif self.questionNumber = 1:
+                    laitetaanPaalle = self.isPositive(msg)#(True tai False)
+                    palautettavaString = self.activeTopic.turnOnOff(laitetaanPaalle)
+                #timer
+                elif self.questionNumber = 2:
+                    tunnit = self.giveHours(msg)
+                    minuutit = self.giveMinutes(msg)
+                    palautettavaString = self.activeTopic.setTimer(tunnit, minuutit)
+                #temperature
+                elif self.questionNumber = 3:
+                    lampotila = self.giveTemperature(msg)
+                    palautettavaString = self.activeTopic.setTemperature(lampotila)
+
+                self.questionNumber += 1
+            else:
+                #annetaan loppustatus
+                palautettavaString = self.activeTopic.status()
+                #asia on käsitelty
+                self.activeTopic = None
+                self.questionNumber = 0
+
+        #lopeta komento annettu tai asia on käsitelty
+        if self.isLopeta():
+            self.activeTopic = None
+            self.questionNumber = 0
+
+        return palautettavaString
+
+class SMSVahtimestari:
+    commands = [Help(), Sauna(), Oven(), Car(), AirConditioning(), Electricity(), DoorGuard()]
+    commandInterpreter = CommandInterpreter()
+
+    def __init__(self):
+        self.receiver = SMSReceiver(self.handleMessage)
+        self.sender = SMSSender()
+        #ei printtiä  alkuun, koska tekstareissa ei silleen
+        #print("SMSVahtimestari on päällä. Lähetä käsky " + str(SMSVahtimestari.commands[0]) + " mikäli tarvitset apua käytässä.\n")
+        self.receiver.listen()
+
+    def handleMessage(self, msg):
+        self.sender.send(SMSVahtimestari.commandInterpreter.interpret(msg))
+        self.receiver.listen()
+
+if __name__ == "__main__":
+    SMSVahtimestari()
+
+'''
+    def vanhaInterpreterJaMuutakin():
         #prosessoi viestin osiin ja yhtenäistaa muotoilun
         wordList = msg.split(' ')
         for idx, word in enumerate(wordList):
             word.lower()
             word.strip()
             wordList[idx] = word
-        #mystinen logiikka
-        return True
-
-    def giveTopic(self, msg):
+        #jos viestissa ja kaskyissa on jokin sama niin muutetaan comentoa cutsuttavaa
         commandToCall = None
         for cmd in SMSVahtimestari.commands:
             if (str(cmd) in wordList):
                 commandToCall = cmd
+#-------------------------------------------
 
-
-    def interpret(self, msg):
-        #alkutilanne
-        if activeTopic is None:
-            #hommaa actiivinen topikki
-        else:
-            self.activeTopic.status()
-
-            #tulkitaan msg
-
-            self.activeTopic.turnOnOff()
-            self.activeTopic.setTimer()
-
-            #katsotaan että temp on hyvä
-            temp = msg
-            self.activeTopic.setTemperature(temp)
-
-
-    def tassa on vaan roskakoodia():
+        self.activeTopic = commandToCall
+#-------------------------------------------
             # topikki on valittu
             elif self.stateLAITATASTAENUMI = 0 and self.activeTopic.howManyParameters() >= 0:
                 self.activeTopic.status()
@@ -81,13 +159,7 @@ class CommandInterpreter:
         elif#
 
         if self.activeTopic.howManyParameters() < self.stateLAITATASTAENUMI:
-
-
-
-
-
-        
-
+#-------------------------------------------
         if self.dialogueIsOn:
                 #tassa vaiheessa kaskee asian päälle jos paasee tanne asti
                 return "dialogia: " + self.activeTopic.turnOnOff(True)
@@ -110,21 +182,4 @@ class CommandInterpreter:
 
             else:
                 self.dialogueIsOn = True
-
-class SMSVahtimestari:
-    commands = [Help(), Sauna(), Oven(), Car(), AirConditioning(), Electricity(), DoorGuard()]
-    commandInterpreter = CommandInterpreter()
-
-    def __init__(self):
-        self.receiver = SMSReceiver(self.handleMessage)
-        self.sender = SMSSender()
-        #ei printtiä  alkuun, koska tekstareissa ei silleen
-        #print("SMSVahtimestari on päällä. Lähetä käsky " + str(SMSVahtimestari.commands[0]) + " mikäli tarvitset apua käytässä.\n")
-        self.receiver.listen()
-
-    def handleMessage(self, msg):
-        self.sender.send(SMSVahtimestari.commandInterpreter.interpret(msg))
-        self.receiver.listen()
-
-if __name__ == "__main__":
-    SMSVahtimestari()
+'''
