@@ -1,0 +1,30 @@
+Komennolla "lopeta" ohjelmaa unohtaa tähänastisen
+keskustelun ja palaa alkuun.
+
+osaavien käyttäjien lyhyt syntaksi:
+
+sauna 1930 80/sauna pois
+uuni 1930 200/uuni pois
+auto 1930/auto pois
+ilmastointi päällä/pois
+ovivahti päällä/pois
+
+"apua"-komennolla tulostetaan:
+=============================================================
+Palaa alkuun komennolla "lopeta". Seuravilla komennoilla pääset
+vaikuttamaan kotisi laitteisiin: 
+
+sauna
+uuni
+auto
+ilmastointi
+ovivahti
+
+Voit myös antaa komennot suoraan seuraavassa muodossa:
+sauna 1930 80/sauna pois
+uuni 1930 200/uuni pois
+auto 1930/auto pois
+ilmastointi päällä/pois
+ovivahti päällä/pois
+
+=============================================================
