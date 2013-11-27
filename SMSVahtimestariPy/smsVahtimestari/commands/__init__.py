@@ -11,12 +11,12 @@ class AirConditioning:
         self.currentTemperature = 25
     
     def status(self):
-        temp = "Asunnon lämpötila on nyt " + str(self.currentTemperature)
+        statusText = "Asunnon lämpötila on nyt " + str(self.currentTemperature)
         if (self.isOn):
-            temp += " ja ilmastointi on päällä. " +""
+            statusText += " ja ilmastointi on päällä. " +""
         else:
-            temp += " ja ilmastointi ei ole päällä. " +"Laitetaanko se päälle?"
-        return temp
+            statusText += " ja ilmastointi ei ole päällä. " +"Laitetaanko se päälle?"
+        return statusText
     
     def turnOnOff(self, onOff):
         if (self.isOn and onOff):
