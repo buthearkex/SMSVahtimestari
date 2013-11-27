@@ -3,7 +3,7 @@ import datetime
 
 class AirConditioning:
 
-    def howManyParameters():
+    def howManyParameters(self):
         return 1
     
     def __init__(self):
@@ -35,7 +35,7 @@ class AirConditioning:
         
 class Car:
 
-    def howManyParameters():
+    def howManyParameters(self):
         return 2
     
     def __init__(self):
@@ -78,7 +78,7 @@ class Car:
 
 class DoorGuard:
 
-    def howManyParameters():
+    def howManyParameters(self):
         return 1
     
     def __init__(self):
@@ -108,7 +108,7 @@ class DoorGuard:
 
 class Electricity:
 
-    def howManyParameters():
+    def howManyParameters(self):
         return 0
     
     def __init(self):
@@ -123,7 +123,7 @@ class Electricity:
 
 class Help:
 
-    def howManyParameters():
+    def howManyParameters(self):
         return 0
     
     def status(self):
@@ -135,7 +135,7 @@ class Help:
     
 class Sauna:
 
-    def howManyParameters():
+    def howManyParameters(self):
         return 3
     
     def __init__(self):
@@ -149,7 +149,7 @@ class Sauna:
         if (temperature > 120 and temperature < 40):
             return "Anna luku väliltä 40-120"
         else:
-            return "Sauna lämpötilassa " + str(temperature) + " klo " + 
+            return "Sauna lämpötilassa " + str(temperature) + " klo " + "XXXXXX"
 
     def getCurrentTemperature(self):
         return self.currentTemperature
@@ -191,7 +191,7 @@ class Sauna:
     
 class Oven:
 
-    def howManyParameters():
+    def howManyParameters(self):
         return 3
     
     def __init__(self):
