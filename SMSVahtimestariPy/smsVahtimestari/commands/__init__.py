@@ -165,7 +165,8 @@ class Sauna:
         if(self.isOn):
             return "Sauna on lämpenemässä ja sen lämpö on nyt " + str(self.currentTemperature)
         else:
-            return "Sauna ei ole päällä ja sen lämpö on nyt " + str(self.currentTemperature)
+            return "Laitetaanko sauna päälle?"
+            #return "Sauna ei ole päällä ja sen lämpö on nyt " + str(self.currentTemperature)
 
     def turnOnOff(self, onOff):
         if (self.isOn and onOff):
@@ -175,7 +176,7 @@ class Sauna:
             return "kiuas sammutetaan"
         elif (onOff): 
             self.isOn = True 
-            return "kiuas lämmitetään" 
+            return "Mihin aikaan sauna lämpimäksi?" 
         else:
             return "kiuas ei ollut päällä" 
 
