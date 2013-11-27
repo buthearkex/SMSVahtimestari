@@ -64,7 +64,6 @@ class CommandInterpreter:
 
         #alkutilanne
         if self.activeTopic is None:
-            print("***alkutilanne")
             #hommaa actiivisen topikin
             self.giveTopic(msg)
 
@@ -95,18 +94,22 @@ class CommandInterpreter:
                     print("***tänne ei pitäisi päätyä")
                     print(self.questionNumber)
                 self.questionNumber += 1
-            else:
-                print("***loppustatus")
+            
+            if not self.activeTopicHasNextQuestion():
+                print("***loppustatus - jätetty pois")
                 #annetaan loppustatus
-                palautettavaString = self.activeTopic.status()
+                #palautettavaString = self.activeTopic.status()
+                
                 #asia on käsitelty
                 self.activeTopic = None
                 self.questionNumber = 0
+                print("***nyt dialogi on alkutilanteessa")
 
         #lopeta komento annettu tai asia on käsitelty
         if self.isLopeta(msg):
             self.activeTopic = None
             self.questionNumber = 0
+            print("***nyt dialogi on alkutilanteessa")
 
         return palautettavaString
 
