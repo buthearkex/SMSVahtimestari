@@ -88,7 +88,7 @@ class DoorGuard:
         if (self.isOn):
             return "Ovivahti päällä"
         else:
-            return "Ovivahti pois päältä"
+            return "Ovivahti pois päältä. Laitetaanko se päälle?"
 
     def turnOnOff(self, onOff):
         if (self.isOn and onOff):
