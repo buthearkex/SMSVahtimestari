@@ -22,20 +22,20 @@ class CommandInterpreter:
         #mystinen logiikka
         self.activeTopic = Sauna()
 
-    def giveHours(msg):
+    def giveHours(self, msg):
         #mystinen logiikka
         return 20
 
-    def giveMinutes(msg):
+    def giveMinutes(self, msg):
         #mystinen logiikka
         return 20
 
-    def giveTemperature(msg):
+    def giveTemperature(self, msg):
         #mystinen logiikka
         return 80
 
 
-    def activeTopicHasNextQuestion():
+    def activeTopicHasNextQuestion(self):
         if self.questionNumber <= self.activeTopic.howManyParameters():
             return True
         return False
@@ -50,26 +50,26 @@ class CommandInterpreter:
         palautettavaString = ""
 
         #alkutilanne
-        if activeTopic is None:
+        if self.activeTopic is None:
             #hommaa actiivisen topikin
             self.giveTopic(msg)
         else:
             if self.activeTopicHasNextQuestion(): 
                 #kysytään seuraavat kysymykset tässä järjestyksessä
                 #status
-                if self.questionNumber = 0:
+                if self.questionNumber == 0:
                     palautettavaString = self.activeTopic.status()
                 #on/off
-                elif self.questionNumber = 1:
+                elif self.questionNumber == 1:
                     laitetaanPaalle = self.isPositive(msg)#(True tai False)
                     palautettavaString = self.activeTopic.turnOnOff(laitetaanPaalle)
                 #timer
-                elif self.questionNumber = 2:
+                elif self.questionNumber == 2:
                     tunnit = self.giveHours(msg)
                     minuutit = self.giveMinutes(msg)
                     palautettavaString = self.activeTopic.setTimer(tunnit, minuutit)
                 #temperature
-                elif self.questionNumber = 3:
+                elif self.questionNumber == 3:
                     lampotila = self.giveTemperature(msg)
                     palautettavaString = self.activeTopic.setTemperature(lampotila)
 
