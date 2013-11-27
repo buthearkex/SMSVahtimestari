@@ -82,7 +82,7 @@ class CommandInterpreter:
                 self.questionNumber = 0
 
         #lopeta komento annettu tai asia on käsitelty
-        if self.isLopeta():
+        if self.isLopeta(msg):
             self.activeTopic = None
             self.questionNumber = 0
 
