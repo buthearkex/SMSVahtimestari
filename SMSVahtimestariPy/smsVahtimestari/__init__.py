@@ -53,7 +53,8 @@ class CommandInterpreter:
         if self.activeTopic is None:
             #hommaa actiivisen topikin
             self.giveTopic(msg)
-        else:
+
+        if self.activeTopic is not None:
             if self.activeTopicHasNextQuestion(): 
                 #kysytään seuraavat kysymykset tässä järjestyksessä
                 #status
