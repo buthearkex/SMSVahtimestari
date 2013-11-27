@@ -20,7 +20,20 @@ class CommandInterpreter:
 
     def giveTopic(self, msg):
         #mystinen logiikka
-        self.activeTopic = Sauna()
+
+        #prosessoi viestin osiin ja yhtenäistaa muotoilun
+        wordList = msg.split(' ')
+        for idx, word in enumerate(wordList):
+            word.lower()
+            word.strip()
+            wordList[idx] = word
+        #jos viestissa ja kaskyissa on jokin sama niin muutetaan comentoa cutsuttavaa
+        commandToCall = None
+        for cmd in SMSVahtimestari.commands:
+            if (str(cmd) in wordList):
+                commandToCall = cmd
+        #self.activeTopic = Sauna()
+        self.activeTopic = commandToCall
 
     def giveHours(self, msg):
         #mystinen logiikka
@@ -51,6 +64,7 @@ class CommandInterpreter:
 
         #alkutilanne
         if self.activeTopic is None:
+            print("***alkutilanne")
             #hommaa actiivisen topikin
             self.giveTopic(msg)
 
@@ -59,23 +73,30 @@ class CommandInterpreter:
                 #kysytään seuraavat kysymykset tässä järjestyksessä
                 #status
                 if self.questionNumber == 0:
+                    print("***status")
                     palautettavaString = self.activeTopic.status()
                 #on/off
                 elif self.questionNumber == 1:
+                    print("***on/off")
                     laitetaanPaalle = self.isPositive(msg)#(True tai False)
                     palautettavaString = self.activeTopic.turnOnOff(laitetaanPaalle)
                 #timer
                 elif self.questionNumber == 2:
+                    print("***timer")
                     tunnit = self.giveHours(msg)
                     minuutit = self.giveMinutes(msg)
                     palautettavaString = self.activeTopic.setTimer(tunnit, minuutit)
                 #temperature
                 elif self.questionNumber == 3:
+                    print("***temerature")
                     lampotila = self.giveTemperature(msg)
                     palautettavaString = self.activeTopic.setTemperature(lampotila)
-
+                else:
+                    print("***tänne ei pitäisi päätyä")
+                    print(self.questionNumber)
                 self.questionNumber += 1
             else:
+                print("***loppustatus")
                 #annetaan loppustatus
                 palautettavaString = self.activeTopic.status()
                 #asia on käsitelty
