@@ -95,6 +95,7 @@ class CommandInterpreter:
                     print(self.questionNumber)
                 self.questionNumber += 1
             
+            #ei toteutettu elsellä, koska muuten tulisi tarpeeton syötepyyntö käyttäjälle
             if not self.activeTopicHasNextQuestion():
                 print("***loppustatus - jätetty pois")
                 #annetaan loppustatus
