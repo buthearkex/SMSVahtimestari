@@ -43,6 +43,12 @@ class Car:
         self.currentTime = datetime.datetime.now()
         self.isOn = False    
 
+    def status(self):
+        if (self.isOn):
+            return "Auton lämmitys päällä"
+        else:
+            return "Auton lämmitys ei päällä"
+
     def turnOnOff(self, onOff):
         if (self.isOn and onOff):
             return "Auton lämmitys on jo päällä" 
@@ -54,12 +60,6 @@ class Car:
             return "Auton lämmitys lämmitetään" 
         else:
             return "Auton lämmitys ei ollut päällä" 
-
-    def status(self):
-        if (self.isOn):
-            return "Auton lämmitys päällä"
-        else:
-            return "Auton lämmitys ei päällä"
 
     def setTimer(self, hours, minutes):
         year = self.currentTime.year
@@ -84,6 +84,12 @@ class DoorGuard:
     def __init__(self):
         self.isOn = False
 
+    def status(self):
+        if (self.isOn):
+            return "Ovivahti päällä"
+        else:
+            return "Ovivahti pois päältä"
+
     def turnOnOff(self, onOff):
         if (self.isOn and onOff):
             return "Ovivahti on jo päällä" 
@@ -95,16 +101,9 @@ class DoorGuard:
             return "Ovivahti päälle"
         else:
             return "Ovivahti ei ollut päällä" 
-
-    def status(self):
-        if (self.isOn):
-            return "Ovivahti päällä"
-        else:
-            return "Ovivahti pois päältä"
-
+    
     def __str__(self):
         return "ovivahti"
-        
 
 class Electricity:
 
@@ -216,11 +215,24 @@ class Oven:
         self.currentTime = datetime.datetime.now()
         self.isOn = False
     
-    def setTemperature(self, temperature):
-        if (temperature > 120 and temperature < 20):
-            return "Luku ei kelpaa. Anna lämpötila 300-20 väliltä"
+    def status(self):
+        if(self.isOn):
+            return "uuni on lämpenemässä ja sen lämpö on nyt " + str(self.currentTemperature)
         else:
-            return "Kelpaa, lämpenee " + str(temperature)
+            return "Laitetaanko uuni päälle?"
+            #return "uuni ei ole päällä ja sen lämpö on nyt " + str(self.currentTemperature)
+ 
+    def turnOnOff(self, onOff):
+        if (self.isOn and onOff):
+            return "uuni on jo päällä" 
+        elif (self.isOn): 
+            self.isOn = False 
+            return "uuni sammutetaan"
+        elif (onOff): 
+            self.isOn = True 
+            return "Mihin aikaan uuni lämpimäksi?" 
+        else:
+            return "uuni ei ollut päällä" 
 
     def getCurrentTemperature(self):
         return self.currentTemperature
@@ -234,25 +246,13 @@ class Oven:
         if (realDiff < 0):
             return "Liian vähän aikaa, aloitetaan lämmitys nyt, valmista on... "
         else:
-            return "Kelpaa, lämpenee valmiiksi kello " + str(hours) + ":" + str(minutes)
+            return "Mihin lämpötilaan?"#"Kelpaa, lämpenee valmiiksi kello " + str(hours) + ":" + str(minutes)
 
-    def turnOnOff(self, onOff):
-        if (self.isOn and onOff):
-            return "uuni on jo päällä" 
-        elif (self.isOn): 
-            self.isOn = False 
-            return "uuni sammutetaan"
-        elif (onOff): 
-            self.isOn = True 
-            return "uuni lämmitetään" 
+    def setTemperature(self, temperature):
+        if (temperature > 120 and temperature < 20):
+            return "Luku ei kelpaa. Anna lämpötila 300-20 väliltä"
         else:
-            return "uuni ei ollut päällä" 
-
-    def status(self):
-        if(self.isOn):
-            return "uuni on lämpenemässä ja sen lämpö on nyt " + str(self.currentTemperature)
-        else:
-            return "uuni ei ole päällä ja sen lämpö on nyt " + str(self.currentTemperature)
+            return "Kelpaa, lämpenee " + str(temperature)
 
     def __str__(self):
         return "uuni"
