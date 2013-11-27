@@ -127,7 +127,23 @@ class Help:
         return 0
     
     def status(self):
-        return "Tässäpä sinulle ohjeet: \n" + "Sauna \n" + "Uuni \n" + "Auto \n" + "Lämmitys \n" + "Sähkö \n" + "Ovivahti"
+        helpText = ""
+        helpText += "Palaa alkuun komennolla *lopeta*. Seuravilla komennoilla pääset\n"
+        helpText += "vaikuttamaan kotisi laitteisiin: \n"
+        helpText += "\n"
+        helpText += "sauna\n"
+        helpText += "uuni\n"
+        helpText += "auto\n"
+        helpText += "ilmastointi\n"
+        helpText += "ovivahti\n"
+        helpText += "\n"
+        helpText += "Voit myös antaa komennot suoraan seuraavassa muodossa:\n"
+        helpText += "sauna 1930 80/sauna pois\n"
+        helpText += "uuni 1930 200/uuni pois\n"
+        helpText += "auto 1930/auto pois\n"
+        helpText += "ilmastointi päällä/pois\n"
+        helpText += "ovivahti päällä/pois\n"
+        return helpText
 
     def __str__(self):
         return "apua"
@@ -145,14 +161,23 @@ class Sauna:
         self.isOn = False
         self.warmAt = 0,0
     
-    def setTemperature(self, temperature):
-        if (temperature > 120 and temperature < 40):
-            return "Anna luku väliltä 40-120"
+    def status(self):
+        if(self.isOn):
+            return "Sauna on lämpenemässä ja sen lämpö on nyt " + str(self.currentTemperature)
         else:
-            return "Sauna lämpötilassa " + str(temperature) + " klo " + "XXXXXX"
+            return "Sauna ei ole päällä ja sen lämpö on nyt " + str(self.currentTemperature)
 
-    def getCurrentTemperature(self):
-        return self.currentTemperature
+    def turnOnOff(self, onOff):
+        if (self.isOn and onOff):
+            return "kiuas on jo päällä" 
+        elif (self.isOn): 
+            self.isOn = False 
+            return "kiuas sammutetaan"
+        elif (onOff): 
+            self.isOn = True 
+            return "kiuas lämmitetään" 
+        else:
+            return "kiuas ei ollut päällä" 
 
     def setTimer(self, hours, minutes):
         year = self.currentTime.year
@@ -167,24 +192,14 @@ class Sauna:
             warmAt = hours, minutes
             return "Mihin lämpötilaan?"
 
-
-    def turnOnOff(self, onOff):
-        if (self.isOn and onOff):
-            return "kiuas on jo päällä" 
-        elif (self.isOn): 
-            self.isOn = False 
-            return "kiuas sammutetaan"
-        elif (onOff): 
-            self.isOn = True 
-            return "kiuas lämmitetään" 
+    def setTemperature(self, temperature):
+        if (temperature > 120 and temperature < 40):
+            return "Anna luku väliltä 40-120"
         else:
-            return "kiuas ei ollut päällä" 
+            return "Sauna lämpötilassa " + str(temperature) + " klo " + "XXXXXX"
 
-    def status(self):
-        if(self.isOn):
-            return "Sauna on lämpenemässä ja sen lämpö on nyt " + str(self.currentTemperature)
-        else:
-            return "Sauna ei ole päällä ja sen lämpö on nyt " + str(self.currentTemperature)
+    def getCurrentTemperature(self):
+        return self.currentTemperature
 
     def __str__(self):
         return "sauna"
