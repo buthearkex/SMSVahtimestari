@@ -98,7 +98,7 @@ class DoorGuard:
             return "Ovivahti sammutetaan" 
         elif (onOff):
             self.isOn = True 
-            return "Ovivahti päälle"
+            return "Ovivahti laitettiin päälle."
         else:
             return "Ovivahti ei ollut päällä" 
     
