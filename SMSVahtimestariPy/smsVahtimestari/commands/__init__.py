@@ -26,7 +26,7 @@ class AirConditioning:
             return "Ilmastointi sammutetaan"
         elif (onOff):
             self.isOn = True
-            return "Ilmastointi lämmitetään" 
+            return "Ilmastointi on nyt päällä" 
         else:
             return "Ilmastointi ei ollut päällä"
     
