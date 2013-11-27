@@ -47,7 +47,7 @@ class Car:
         if (self.isOn):
             return "Auton lämmitys päällä"
         else:
-            return "Auton lämmitys ei päällä"
+            return "Laitetaanko auton lämmitys päälle?"
 
     def turnOnOff(self, onOff):
         if (self.isOn and onOff):
@@ -57,7 +57,7 @@ class Car:
             return "Auton lämmitys sammutetaan"  
         elif (onOff):
             self.isOn = True 
-            return "Auton lämmitys lämmitetään" 
+            return "Mihin aikaan lämpimäksi?" 
         else:
             return "Auton lämmitys ei ollut päällä" 
 
