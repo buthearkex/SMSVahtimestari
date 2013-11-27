@@ -7,7 +7,7 @@ class AirConditioning:
         return 1
     
     def __init__(self):
-        self._isOn = False
+        self.isOn = False
         self.currentTemperature = 25
     
     def status(self):
@@ -31,7 +31,7 @@ class AirConditioning:
             return "Ilmastointi ei ollut päällä"
     
     def __str__(self):
-        return "lämmitys"
+        return "ilmastointi"
         
 class Car:
 
@@ -111,14 +111,14 @@ class Electricity:
     def howManyParameters(self):
         return 0
     
-    def __init(self):
+    def __init__(self):
         self.elConsumption = random.randint(200, 1000)
 
     def status(self):
-        return "Sähköä kuluu nyt " + str(self.elConsumption) + "Wattia"
+        return "Sähköä kuluu nyt " + str(self.elConsumption) + " W"
 
     def __str__(self):
-        return "sähkö"
+        return "sahko"
 
 
 class Help:
