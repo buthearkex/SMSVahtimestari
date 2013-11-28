@@ -10,23 +10,21 @@ class CommandInterpreter:
         self.activeTopic = None
         self.questionNumber = 0
 
-    def isPositive(self, msg):
-        #mystinen logiikka
-        return True
+    def isPositive(self, wordList):
+        if "päälle" in wordList or "k" in wordList or "kyllä" in wordList or "joo" in wordList:
+            return True
+        elif "sammuta" in wordList or "pois" in wordList:
+            return False
+        else:
+            return False
 
-    def isLopeta(self, msg):
+    def isFinished(self, wordList):
         #mystinen logiikka
         return False
 
-    def giveTopic(self, msg):
+    def giveTopic(self, wordList):
         #mystinen logiikka
-
-        #prosessoi viestin osiin ja yhtenäistaa muotoilun
-        wordList = msg.split(' ')
-        for idx, word in enumerate(wordList):
-            word.lower()
-            word.strip()
-            wordList[idx] = word
+        
         #jos viestissa ja kaskyissa on jokin sama niin muutetaan comentoa cutsuttavaa
         commandToCall = None
         for cmd in SMSVahtimestari.commands:
@@ -53,19 +51,25 @@ class CommandInterpreter:
             return True
         return False
 
-    '''
-    saa käyttäjän viestin sellaisenaan ilman aiempia muokkauksia
-    pyörittää dialogin logiikkaa = controller
-    palauttaa dialogin toisen puolen takaisinpäin
     
-    '''
     def interpret(self, msg):
+        '''
+        saa käyttäjän viestin sellaisenaan ilman aiempia muokkauksia
+        pyörittää dialogin logiikkaa = controller
+        palauttaa dialogin toisen puolen takaisinpäin
+        '''
         palautettavaString = ""
 
         #alkutilanne
+        #prosessoi viestin osiin ja yhtenäistaa muotoilun
+        wordList = msg.split(' ')
+        for idx, word in enumerate(wordList):
+            word.lower()
+            word.strip()
+            wordList[idx] = word
         if self.activeTopic is None:
             #hommaa actiivisen topikin
-            self.giveTopic(msg)
+            self.giveTopic(wordList)
 
         if self.activeTopic is not None:
             if self.activeTopicHasNextQuestion(): 
@@ -77,18 +81,18 @@ class CommandInterpreter:
                 #on/off
                 elif self.questionNumber == 1:
                     print("***on/off")
-                    laitetaanPaalle = self.isPositive(msg)#(True tai False)
+                    laitetaanPaalle = self.isPositive(wordList)#(True tai False)
                     palautettavaString = self.activeTopic.turnOnOff(laitetaanPaalle)
                 #timer
                 elif self.questionNumber == 2:
                     print("***timer")
-                    tunnit = self.giveHours(msg)
-                    minuutit = self.giveMinutes(msg)
+                    tunnit = self.giveHours(wordList)
+                    minuutit = self.giveMinutes(wordList)
                     palautettavaString = self.activeTopic.setTimer(tunnit, minuutit)
                 #temperature
                 elif self.questionNumber == 3:
-                    print("***temerature")
-                    lampotila = self.giveTemperature(msg)
+                    print("***temperature")
+                    lampotila = self.giveTemperature(wordList)
                     palautettavaString = self.activeTopic.setTemperature(lampotila)
                 else:
                     print("***tänne ei pitäisi päätyä")
@@ -107,7 +111,7 @@ class CommandInterpreter:
                 print("***nyt dialogi on alkutilanteessa")
 
         #lopeta komento annettu tai asia on käsitelty
-        if self.isLopeta(msg):
+        if self.isFinished(wordList):
             self.activeTopic = None
             self.questionNumber = 0
             print("***nyt dialogi on alkutilanteessa")
