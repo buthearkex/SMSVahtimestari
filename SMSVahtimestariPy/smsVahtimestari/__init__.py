@@ -36,7 +36,7 @@ class CommandInterpreter:
 
     def isMessageUnderstoodAsTime(self, wordList):
         for word in wordList:
-            if word.isdigit() and (int(word) < 2359): 
+            if word.isdigit() and (int(word) < 2400): 
                 return True
             else:
                 others = word.split(":")
@@ -44,6 +44,12 @@ class CommandInterpreter:
                     others = word.split(".")
                 if len(others) == 2 and (others[0].isdigit() and int(others[0]) < 24) and (others[1].isdigit() and int(others[1]) < 60):
                     return True
+        return False
+    
+    def isMessageUnderstoodAsTemperature(self, wordList):
+        for word in wordList:
+            if word.isdigit() and (int(word) <= 300):
+                return True
         return False
 
     def giveTopic(self, wordList):
