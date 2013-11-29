@@ -38,15 +38,18 @@ class Sauna:
             return "Saunaa ei lämmitetä." 
 
     def setTimer(self, hours, minutes):
-        timerTime = datetime.datetime.strptime(str(hours) + ":" + str(minutes), "%H:%M")
-        diff = self.currentTime - timerTime
-        realDiff = self.heatingTimeMin - int(diff.seconds/60)
-        if (realDiff < 0):
-            self.warmAt = self.currentTime.hours + "." + self.currentTime.minutes + self.heatingTimeMin
+        formattedTime = datetime.datetime.strptime(str(hours) + ":" + str(minutes), "%H:%M")
+        diff = formattedTime - self.currentTime 
+        print(diff.seconds/60)#minutes
+        if (diff.seconds/60 < self.heatingTimeMin):
+            self.warmAt = str(self.currentTime.hour) + "." + str(self.currentTime.minute + self.heatingTimeMin)
             return "Sauna ei ehdi lämmetä ajoissa, mutta lämmitys aloitetaan. Mihin lämpötilaan?"
         else:
             self.isOn = True
-            self.warmAt = hours + "." + minutes
+            minuteStr = str(minutes)
+            if minutes < 10:#smoothly format minutes like 12.01 not 12.1
+                minuteStr = "0"+ str(minutes)
+            self.warmAt = str(hours) + "." + minuteStr
             return "Mihin lämpötilaan?"
 
     def setTemperature(self, temperature):
