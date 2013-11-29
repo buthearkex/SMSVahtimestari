@@ -13,10 +13,12 @@ class CommandInterpreter:
     def isPositive(self, wordList):
         if "päälle" in wordList or "k" in wordList or "kyllä" in wordList or "joo" in wordList:
             return True
-        elif "sammuta" in wordList or "pois" in wordList:
-            return False
-        else:
-            return False
+        return False
+
+    def isNegative(self, wordList):
+        if "sammuta" in wordList or "ei" in wordList or "pois" in wordList or "älä" in wordList or "no" in wordList:
+            return True
+        return False
 
     def resetCommandWasGiven(self, wordList):
         if "lopeta" in wordList  or "palaa" in wordList or "alkuun" in wordList:
@@ -26,6 +28,11 @@ class CommandInterpreter:
 
     def giveAllert(self):
         return "Kirjoittaisitko asiat edes oikein"
+
+    def isMessageUnderstood(self, wordList):
+        if self.isPositive(wordList) or self.resetCommandWasGiven(wordList) or self.isNegative(wordList):
+            return True
+        return False
 
     def giveTopic(self, wordList):
         #mystinen logiikka
@@ -101,10 +108,14 @@ class CommandInterpreter:
                 #on/off
                 elif self.questionNumber == 1:
                     print("***on/off")
-                    laitetaanPaalle = self.isPositive(wordList)#gives boolean
-                    palautettavaString = self.activeTopic.turnOnOff(laitetaanPaalle)
-                    if not laitetaanPaalle:
-                        willReset = True
+                    if self.isMessageUnderstood(wordList):
+                        laitetaanPaalle = self.isPositive(wordList)#gives boolean
+                        palautettavaString = self.activeTopic.turnOnOff(laitetaanPaalle)
+                        if not laitetaanPaalle:
+                            willReset = True
+                    else:
+                        palautettavaString = self.giveAllert()
+                        self.questionNumber -= 1
                 #timer
                 elif self.questionNumber == 2:
                     print("***timer")
