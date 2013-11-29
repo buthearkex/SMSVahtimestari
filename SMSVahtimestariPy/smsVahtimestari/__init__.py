@@ -6,11 +6,11 @@ from smsVahtimestari.commands import *
 
 class CommandInterpreter:
     # Static variables to be used as flags with methods.
-    POSITIVE = uuid.uuid4()
-    NEGATIVE = uuid.uuid4()
-    RESET = uuid.uuid4()
-    TIME = uuid.uuid4()
-    TEMPERATURE = uuid.uuid4()
+    POSITIVE = str(uuid.uuid4())
+    NEGATIVE = str(uuid.uuid4())
+    RESET = str(uuid.uuid4())
+    TIME = str(uuid.uuid4())
+    TEMPERATURE = str(uuid.uuid4())
     
     # Static lists of possible commands.
     onOptions = ["päälle", "k", "kyllä", "joo"]
@@ -157,6 +157,7 @@ class CommandInterpreter:
                 elif self.questionNumber == 3:
                     print("***temperature")
                     if self.isMessageUnderstood(wordList, CommandInterpreter.TEMPERATURE):
+                        print("tänne tultiin")
                         lampotila = self.giveTemperature(wordList)
                         stringToReturn = self.activeTopic.setTemperature(lampotila)
                     else: # was not understood
