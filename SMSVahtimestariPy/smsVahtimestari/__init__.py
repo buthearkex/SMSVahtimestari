@@ -1,64 +1,72 @@
+import uuid
+
 from smsMocks import *
 from smsVahtimestari.commands import *
 
 
 class CommandInterpreter:
+    # Static variables to be used as flags with methods.
+    POSITIVE = uuid.uuid4()
+    NEGATIVE = uuid.uuid4()
+    RESET = uuid.uuid4()
+    TIME = uuid.uuid4()
+    TEMPERATURE = uuid.uuid4()
+    
+    # Static lists of possible commands.
+    onOptions = ["päälle", "k", "kyllä", "joo"]
+    offOptions = ["sammuta", "e", "ei", "pois", "älä"]
+    resetCommands = ["lopeta", "palaa", "alkuun"]
+    
     
     def __init__(self):
         self.topic = ""
         self.dialogueIsOn = False
         self.activeTopic = None
         self.questionNumber = 0
-        self.onOptions = ["päälle", "k", "kyllä", "joo"]
-        self.offOptions = ["sammuta", "e", "ei", "pois", "älä"]
+    
+    def commandGiven(self, wordList, case):
+        '''
+        Check if command given was positive, negative or reset command depening on case.
+        Possible cases are POSITIVE, NEGATIVE and RESET (static variables in CommandInterpreter).
+        '''
+        comparable = []
+        if case == CommandInterpreter.POSITIVE:
+            comparable = CommandInterpreter.onOptions
+        elif case == CommandInterpreter.NEGATIVE:
+            comparable = CommandInterpreter.offOptions
+        elif case == CommandInterpreter.RESET:
+            comparable = CommandInterpreter.resetCommands
+        return len(set(comparable) & set(wordList)) > 0
 
-    def isPositive(self, wordList):
-        return len(set(self.onOptions) & set(wordList)) > 0
-
-    def isNegative(self, wordList):
-        return len(set(self.offOptions) & set(wordList)) > 0
-
-    def resetCommandWasGiven(self, wordList):
-        if "lopeta" in wordList  or "palaa" in wordList or "alkuun" in wordList:
-            return True
-        else:
-            return False
-
-    def giveAllert(self):
+    def typo(self):
         return "Kirjoittaisitko asiat edes oikein"
 
-    def isMessageUnderstood(self, wordList):
-        if self.isPositive(wordList) or self.resetCommandWasGiven(wordList) or self.isNegative(wordList):
-            return True
-        return False
-
-    def isMessageUnderstoodAsTime(self, wordList):
-        for word in wordList:
-            if word.isdigit() and (int(word) < 2400): 
-                return True
-            else:
-                others = word.split(":")
-                if len(others) != 2:
-                    others = word.split(".")
-                if len(others) == 2 and (others[0].isdigit() and int(others[0]) < 24) and (others[1].isdigit() and int(others[1]) < 60):
-                    return True
-        return False
+    def isMessageUnderstood(self, wordList, case="0"):
+        if case == 0:
+            return (self.commandGiven(wordList, CommandInterpreter.POSITIVE) or 
+                    self.commandGiven(wordList, CommandInterpreter.RESET) or 
+                    self.commandGiven(wordList, CommandInterpreter.NEGATIVE))
+        else:
+            for word in wordList:
+                if word.isdigit(): 
+                    return (int(word) < (2400 if case == CommandInterpreter.TIME else 301) and
+                            int(word) > (-1 if case == CommandInterpreter.TIME else 30))
+                elif case == CommandInterpreter.TIME:
+                    others = word.split(":")
+                    if len(others) != 2:
+                        others = word.split(".")
+                    if len(others) == 2 and self.isTime(others):
+                        return True
+            return False
     
-    def isMessageUnderstoodAsTemperature(self, wordList):
-        for word in wordList:
-            if word.isdigit() and (int(word) <= 300):
-                return True
-        return False
+    def isTime(self, num):
+        return (num[0].isdigit() and int(num[0]) < 24) and (num[1].isdigit() and int(num[1]) < 60)
 
     def giveTopic(self, wordList):
-        # mystinen logiikka
-        
-        # jos viestissa ja kaskyissa on jokin sama niin muutetaan comentoa cutsuttavaa
         commandToCall = None
         for cmd in SMSVahtimestari.commands:
             if (str(cmd) in wordList):
                 commandToCall = cmd
-        # self.activeTopic = Sauna()
         self.activeTopic = commandToCall
 
     def giveTime(self, wordList):
@@ -110,10 +118,10 @@ class CommandInterpreter:
         if self.activeTopic is None:
             # hommaa actiivisen topikin
             if self.giveTopic(wordList) is None:
-                stringToReturn = self.giveAllert()
+                stringToReturn = self.typo()
 
         # "lopeta" command is given
-        if self.resetCommandWasGiven(wordList):
+        if self.commandGiven(wordList, CommandInterpreter.RESET):
             self.resetToStartingPoint()
             stringToReturn = "Palattiin alkuun."
 
@@ -129,45 +137,39 @@ class CommandInterpreter:
                 elif self.questionNumber == 1:
                     print("***on/off")
                     if self.isMessageUnderstood(wordList):
-                        laitetaanPaalle = self.isPositive(wordList)  # gives boolean
+                        laitetaanPaalle = self.commandGiven(wordList, CommandInterpreter.POSITIVE)
                         stringToReturn = self.activeTopic.turnOnOff(laitetaanPaalle)
                         if not laitetaanPaalle:
                             willReset = True
                     else:  # was not understood
-                        stringToReturn = self.giveAllert()
+                        stringToReturn = self.typo()
                         self.questionNumber -= 1
                 # timer
                 elif self.questionNumber == 2:
                     print("***timer")
-                    if self.isMessageUnderstoodAsTime(wordList):
+                    if self.isMessageUnderstood(wordList, CommandInterpreter.TIME):
                         aika = self.giveTime(wordList)
                         stringToReturn = self.activeTopic.setTimer(aika[0], aika[1])
                     else:  # was not understood
-                        stringToReturn = self.giveAllert()
+                        stringToReturn = self.typo()
                         self.questionNumber -= 1
                 # temperature
                 elif self.questionNumber == 3:
                     print("***temperature")
-                    lampotila = self.giveTemperature(wordList)
-                    stringToReturn = self.activeTopic.setTemperature(lampotila)
+                    if self.isMessageUnderstood(wordList, CommandInterpreter.TEMPERATURE):
+                        lampotila = self.giveTemperature(wordList)
+                        stringToReturn = self.activeTopic.setTemperature(lampotila)
+                    else: # was not understood
+                        stringToReturn = self.typo()
+                        self.questionNumber -= 1
                 else:
                     print("***tänne ei pitäisi päätyä")
                     print(self.questionNumber)
                 self.questionNumber += 1
             
-            # ei toteutettu elsellä, koska muuten tulisi tarpeeton syötepyyntö käyttäjälle
             if willReset or (self.activeTopic is not None and not self.activeTopicHasNextQuestion()):
                 print("***loppustatus - jätetty pois")
-                # annetaan loppustatus
-                # stringToReturn = self.activeTopic.status()
-                
-                # asia on käsitelty
                 self.resetToStartingPoint()
-
-        # lopeta komento annettu tai asia on käsitelty
-        # if self.resetCommandWasGiven(wordList):
-        #    self.resetToStartingPoint()
-
         return stringToReturn
 
 class SMSVahtimestari:
@@ -177,8 +179,6 @@ class SMSVahtimestari:
     def __init__(self):
         self.receiver = SMSReceiver(self.handleMessage)
         self.sender = SMSSender()
-        # ei printtiä  alkuun, koska tekstareissa ei silleen
-        # print("SMSVahtimestari on päällä. Lähetä käsky " + str(SMSVahtimestari.commands[0]) + " mikäli tarvitset apua käytässä.\n")
         self.receiver.listen()
 
     def handleMessage(self, msg):
