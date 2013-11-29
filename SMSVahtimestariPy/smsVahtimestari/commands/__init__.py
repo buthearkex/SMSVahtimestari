@@ -260,12 +260,6 @@ class DoorGuard:
             #when shutdown selected
             return "Ovivahtia ei laiteta päälle." 
     
-    def alert(self, sender):
-        def send():
-            sender.send("Joku tuli asuntoon")
-        t = threading.Timer(30, send)
-        t.start()
-    
     def __str__(self):
         return "ovivahti"
 
