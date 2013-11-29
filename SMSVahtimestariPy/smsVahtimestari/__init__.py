@@ -69,6 +69,7 @@ class CommandInterpreter:
         palauttaa dialogin toisen puolen takaisinpäin
         '''
         palautettavaString = ""
+        willReset = False
 
         #alkutilanne
         #prosessoi viestin osiin ja yhtenäistaa muotoilun
@@ -103,7 +104,7 @@ class CommandInterpreter:
                     laitetaanPaalle = self.isPositive(wordList)#gives boolean
                     palautettavaString = self.activeTopic.turnOnOff(laitetaanPaalle)
                     if not laitetaanPaalle:
-                        self.resetToStartingPoint()
+                        willReset = True
                 #timer
                 elif self.questionNumber == 2:
                     print("***timer")
@@ -121,7 +122,7 @@ class CommandInterpreter:
                 self.questionNumber += 1
             
             #ei toteutettu elsellä, koska muuten tulisi tarpeeton syötepyyntö käyttäjälle
-            if self.activeTopic is not None and not self.activeTopicHasNextQuestion():
+            if willReset or (self.activeTopic is not None and not self.activeTopicHasNextQuestion()):
                 print("***loppustatus - jätetty pois")
                 #annetaan loppustatus
                 #palautettavaString = self.activeTopic.status()
