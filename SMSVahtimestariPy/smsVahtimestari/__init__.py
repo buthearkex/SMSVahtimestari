@@ -132,19 +132,13 @@ class CommandInterpreter:
             else:
                 if len(wordList) == self.activeTopic.howManyParameters()+1:#+1 is for topic name
                     willTryToShortCut = True
-                    #willReset = True
-                    #if len(wordList) > 0:
-                        #stringToReturn = self.activeTopic.status()
                     if len(wordList) > 1:
-                        print("tassataas.....")
                         laitetaanPaalle = self.commandGiven(wordList, CommandInterpreter.POSITIVE)
                         stringToReturn = self.activeTopic.turnOnOff(laitetaanPaalle)
                     if len(wordList) > 2:
-                        print("selevä....")
                         aika = self.giveTime(wordList)
                         stringToReturn = self.activeTopic.setTimer(aika[0], aika[1])
                     if len(wordList) > 3:
-                        print("kaikissa....")
                         lampotila = self.giveTemperature(wordList)
                         stringToReturn = self.activeTopic.setTemperature(lampotila)
 
