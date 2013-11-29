@@ -1,6 +1,6 @@
 import uuid
 
-from smsMocks import *
+from smsVahtimestari.smsMocks import *
 from smsVahtimestari.commands import *
 
 
