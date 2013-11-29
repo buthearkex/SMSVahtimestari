@@ -222,7 +222,7 @@ class Car:
             return "Liian vähän aikaa. Lämmitys aloitetaan nyt, valmista on " + warmAtStr
         else:
             mins = str(minutes)
-            if len(min) < 2:
+            if len(mins) < 2:
                 mins = "0" + mins
             warmAtStr = str(hours) + "." + mins
             return "Kelpaa, lämpenee valmiiksi kello " + warmAtStr
@@ -302,25 +302,20 @@ class AirConditioning:
 class Help:
 
     def howManyParameters(self):
-        return 0
+        return 1
     
     def status(self):
         helpText = ""
-        helpText += "Palaa alkuun komennolla *lopeta*. Seuravilla komennoilla pääset\n"
-        helpText += "vaikuttamaan kotisi laitteisiin: \n"
-        # helpText += "\n"
-        helpText += "sauna\n"
-        helpText += "uuni\n"
-        helpText += "auto\n"
-        helpText += "ilmastointi\n"
-        helpText += "ovivahti"#\n"
-        #helpText += "\n"
-        #helpText += "Voit myös antaa komennot suoraan seuraavassa muodossa:\n"
-        #helpText += "sauna 1930 80/sauna pois\n"
-        #helpText += "uuni 1930 200/uuni pois\n"
-        #helpText += "auto 1930/auto pois\n"
-        #helpText += "ilmastointi päällä/pois\n"
-        #helpText += "ovivahti päällä/pois\n"
+        helpText += "Palaa alkuun komennolla:\n"
+        helpText += "  *lopeta*\n"
+        helpText += "\n"
+        helpText += "Seuravilla komennoilla pääset vaikuttamaan kotisi laitteisiin: \n"
+        helpText += "  *sauna* | *uuni* | *auto* | *ilmastointi* | *ovivahti*\n"
+        helpText += "\n"
+        helpText += "Voit myös antaa komennot suoraan seuraavassa muodossa:\n"
+        helpText += "  *sauna päälle 1930 80* | *sauna pois*\n"
+        helpText += "  *auto 1930*            | *auto pois*\n"
+        helpText += "  *ovivahti päälle*      | *ovivahti pois* \n"
         return helpText
 
     def __str__(self):
