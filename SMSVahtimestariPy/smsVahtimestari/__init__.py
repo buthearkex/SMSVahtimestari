@@ -35,8 +35,16 @@ class CommandInterpreter:
         return False
 
     def isMessageUnderstoodAsTime(self, wordList):
-        
-        if wordList = msg.split(' ')
+        for word in wordList:
+            if word.isdigit() and (int(word) < 2359): 
+                return True
+            else:
+                others = word.split(":")
+                if len(others) != 2:
+                    others = word.split(".")
+                if len(others) == 2 and (others[0].isdigit() and int(others[0]) < 24) and (others[1].isdigit() and int(others[1]) < 60):
+                    return True
+        return False
 
     def giveTopic(self, wordList):
         #mystinen logiikka
