@@ -9,16 +9,14 @@ class CommandInterpreter:
         self.dialogueIsOn = False
         self.activeTopic = None
         self.questionNumber = 0
+        self.onOptions = ["päälle", "k", "kyllä", "joo"]
+        self.offOptions = ["sammuta", "e", "ei", "pois", "älä"]
 
     def isPositive(self, wordList):
-        if "päälle" in wordList or "k" in wordList or "kyllä" in wordList or "joo" in wordList:
-            return True
-        return False
+        return len(set(self.onOptions) & set(wordList)) > 0
 
     def isNegative(self, wordList):
-        if "sammuta" in wordList or "ei" in wordList or "pois" in wordList or "älä" in wordList or "no" in wordList:
-            return True
-        return False
+        return len(set(self.offOptions) & set(wordList)) > 0
 
     def resetCommandWasGiven(self, wordList):
         if "lopeta" in wordList  or "palaa" in wordList or "alkuun" in wordList:
@@ -53,14 +51,14 @@ class CommandInterpreter:
         return False
 
     def giveTopic(self, wordList):
-        #mystinen logiikka
+        # mystinen logiikka
         
-        #jos viestissa ja kaskyissa on jokin sama niin muutetaan comentoa cutsuttavaa
+        # jos viestissa ja kaskyissa on jokin sama niin muutetaan comentoa cutsuttavaa
         commandToCall = None
         for cmd in SMSVahtimestari.commands:
             if (str(cmd) in wordList):
                 commandToCall = cmd
-        #self.activeTopic = Sauna()
+        # self.activeTopic = Sauna()
         self.activeTopic = commandToCall
 
     def giveTime(self, wordList):
@@ -85,7 +83,7 @@ class CommandInterpreter:
         print("***nyt dialogi on alkutilanteessa")
 
     def activeTopicHasNextQuestion(self):
-        #print("tultiin tänne mutta miksi")
+        # print("tultiin tänne mutta miksi")
         if self.questionNumber <= self.activeTopic.howManyParameters():
             return True
         return False
@@ -100,54 +98,54 @@ class CommandInterpreter:
         stringToReturn = ""
         willReset = False
 
-        #alkutilanne
-        #prosessoi viestin osiin ja yhtenäistaa muotoilun
+        # alkutilanne
+        # prosessoi viestin osiin ja yhtenäistaa muotoilun
         wordList = msg.split(' ')
         for idx, word in enumerate(wordList):
             word.lower()
             word.strip()
             wordList[idx] = word
 
-        #starting point
+        # starting point
         if self.activeTopic is None:
-            #hommaa actiivisen topikin
+            # hommaa actiivisen topikin
             if self.giveTopic(wordList) is None:
                 stringToReturn = self.giveAllert()
 
-        #"lopeta" command is given
+        # "lopeta" command is given
         if self.resetCommandWasGiven(wordList):
             self.resetToStartingPoint()
             stringToReturn = "Palattiin alkuun."
 
-        #topic is selected
+        # topic is selected
         if self.activeTopic is not None:
             if self.activeTopicHasNextQuestion(): 
-                #kysytään seuraavat kysymykset tässä järjestyksessä
-                #status
+                # kysytään seuraavat kysymykset tässä järjestyksessä
+                # status
                 if self.questionNumber == 0:
                     print("***status")
                     stringToReturn = self.activeTopic.status()
-                #on/off
+                # on/off
                 elif self.questionNumber == 1:
                     print("***on/off")
                     if self.isMessageUnderstood(wordList):
-                        laitetaanPaalle = self.isPositive(wordList)#gives boolean
+                        laitetaanPaalle = self.isPositive(wordList)  # gives boolean
                         stringToReturn = self.activeTopic.turnOnOff(laitetaanPaalle)
                         if not laitetaanPaalle:
                             willReset = True
-                    else:#was not understood
+                    else:  # was not understood
                         stringToReturn = self.giveAllert()
                         self.questionNumber -= 1
-                #timer
+                # timer
                 elif self.questionNumber == 2:
                     print("***timer")
                     if self.isMessageUnderstoodAsTime(wordList):
                         aika = self.giveTime(wordList)
                         stringToReturn = self.activeTopic.setTimer(aika[0], aika[1])
-                    else:#was not understood
+                    else:  # was not understood
                         stringToReturn = self.giveAllert()
                         self.questionNumber -= 1
-                #temperature
+                # temperature
                 elif self.questionNumber == 3:
                     print("***temperature")
                     lampotila = self.giveTemperature(wordList)
@@ -157,17 +155,17 @@ class CommandInterpreter:
                     print(self.questionNumber)
                 self.questionNumber += 1
             
-            #ei toteutettu elsellä, koska muuten tulisi tarpeeton syötepyyntö käyttäjälle
+            # ei toteutettu elsellä, koska muuten tulisi tarpeeton syötepyyntö käyttäjälle
             if willReset or (self.activeTopic is not None and not self.activeTopicHasNextQuestion()):
                 print("***loppustatus - jätetty pois")
-                #annetaan loppustatus
-                #stringToReturn = self.activeTopic.status()
+                # annetaan loppustatus
+                # stringToReturn = self.activeTopic.status()
                 
-                #asia on käsitelty
+                # asia on käsitelty
                 self.resetToStartingPoint()
 
-        #lopeta komento annettu tai asia on käsitelty
-        #if self.resetCommandWasGiven(wordList):
+        # lopeta komento annettu tai asia on käsitelty
+        # if self.resetCommandWasGiven(wordList):
         #    self.resetToStartingPoint()
 
         return stringToReturn
@@ -179,8 +177,8 @@ class SMSVahtimestari:
     def __init__(self):
         self.receiver = SMSReceiver(self.handleMessage)
         self.sender = SMSSender()
-        #ei printtiä  alkuun, koska tekstareissa ei silleen
-        #print("SMSVahtimestari on päällä. Lähetä käsky " + str(SMSVahtimestari.commands[0]) + " mikäli tarvitset apua käytässä.\n")
+        # ei printtiä  alkuun, koska tekstareissa ei silleen
+        # print("SMSVahtimestari on päällä. Lähetä käsky " + str(SMSVahtimestari.commands[0]) + " mikäli tarvitset apua käytässä.\n")
         self.receiver.listen()
 
     def handleMessage(self, msg):
