@@ -177,7 +177,7 @@ class Sauna:
             self.isOn = True 
             return "Mihin aikaan sauna lämpimäksi?" 
         else:
-            return "kiuas ei ollut päällä" 
+            return "Saunaa ei lämmitetä." 
 
     def setTimer(self, hours, minutes):
         year = self.currentTime.year
