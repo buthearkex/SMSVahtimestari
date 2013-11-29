@@ -18,9 +18,14 @@ class CommandInterpreter:
         else:
             return False
 
-    def isFinished(self, wordList):
-        #mystinen logiikka
-        return False
+    def resetCommandWasGiven(self, wordList):
+        if "lopeta" in wordList  or "palaa" in wordList or "alkuun" in wordList:
+            return True
+        else:
+            return False
+
+    def giveAllert(self):
+        return "Kirjoittaisitko asiat edes oikein"
 
     def giveTopic(self, wordList):
         #mystinen logiikka
@@ -45,8 +50,13 @@ class CommandInterpreter:
         #mystinen logiikka
         return 80
 
+    def resetToStartingPoint(self):
+        self.activeTopic = None
+        self.questionNumber = 0
+        print("***nyt dialogi on alkutilanteessa")
 
     def activeTopicHasNextQuestion(self):
+        #print("tultiin tänne mutta miksi")
         if self.questionNumber <= self.activeTopic.howManyParameters():
             return True
         return False
@@ -67,10 +77,19 @@ class CommandInterpreter:
             word.lower()
             word.strip()
             wordList[idx] = word
+
+        #starting point
         if self.activeTopic is None:
             #hommaa actiivisen topikin
-            self.giveTopic(wordList)
+            if self.giveTopic(wordList) is None:
+                palautettavaString = self.giveAllert()
 
+        #"lopeta" command is given
+        if self.resetCommandWasGiven(wordList):
+            self.resetToStartingPoint()
+            palautettavaString = "Palattiin alkuun."
+
+        #topic is selected
         if self.activeTopic is not None:
             if self.activeTopicHasNextQuestion(): 
                 #kysytään seuraavat kysymykset tässä järjestyksessä
@@ -81,8 +100,10 @@ class CommandInterpreter:
                 #on/off
                 elif self.questionNumber == 1:
                     print("***on/off")
-                    laitetaanPaalle = self.isPositive(wordList)#(True tai False)
+                    laitetaanPaalle = self.isPositive(wordList)#gives boolean
                     palautettavaString = self.activeTopic.turnOnOff(laitetaanPaalle)
+                    if not laitetaanPaalle:
+                        self.resetToStartingPoint()
                 #timer
                 elif self.questionNumber == 2:
                     print("***timer")
@@ -100,21 +121,17 @@ class CommandInterpreter:
                 self.questionNumber += 1
             
             #ei toteutettu elsellä, koska muuten tulisi tarpeeton syötepyyntö käyttäjälle
-            if not self.activeTopicHasNextQuestion():
+            if self.activeTopic is not None and not self.activeTopicHasNextQuestion():
                 print("***loppustatus - jätetty pois")
                 #annetaan loppustatus
                 #palautettavaString = self.activeTopic.status()
                 
                 #asia on käsitelty
-                self.activeTopic = None
-                self.questionNumber = 0
-                print("***nyt dialogi on alkutilanteessa")
+                self.resetToStartingPoint()
 
         #lopeta komento annettu tai asia on käsitelty
-        if self.isFinished(wordList):
-            self.activeTopic = None
-            self.questionNumber = 0
-            print("***nyt dialogi on alkutilanteessa")
+        #if self.resetCommandWasGiven(wordList):
+        #    self.resetToStartingPoint()
 
         return palautettavaString
 
@@ -136,80 +153,3 @@ class SMSVahtimestari:
 if __name__ == "__main__":
     SMSVahtimestari()
 
-'''
-    def vanhaInterpreterJaMuutakin():
-        #prosessoi viestin osiin ja yhtenäistaa muotoilun
-        wordList = msg.split(' ')
-        for idx, word in enumerate(wordList):
-            word.lower()
-            word.strip()
-            wordList[idx] = word
-        #jos viestissa ja kaskyissa on jokin sama niin muutetaan comentoa cutsuttavaa
-        commandToCall = None
-        for cmd in SMSVahtimestari.commands:
-            if (str(cmd) in wordList):
-                commandToCall = cmd
-#-------------------------------------------
-
-        self.activeTopic = commandToCall
-#-------------------------------------------
-            # topikki on valittu
-            elif self.stateLAITATASTAENUMI = 0 and self.activeTopic.howManyParameters() >= 0:
-                self.activeTopic.status()
-                #esitetään kysymys
-                if self.isPositive():
-                    stateLAITATASTAENUMI = 1
-
-            # päälle pois valittu
-            elif self.stateLAITATASTAENUMI = 1 and self.activeTopic.howManyParameters() >= 1:
-                self.activeTopic.turnOnOff()
-                #esitetään kysymys
-                if self.answerWasGiven:
-
-            # aika on valittu
-            elif self.stateLAITATASTAENUMI = 2 and self.activeTopic.howManyParameters() >= 2:
-                self.activeTopic.setTimer()
-                #esitetään kysymys
-                if self.answerWasGiven:
-
-            # lämpö on valittu
-            elif self.stateLAITATASTAENUMI = 3 and self.activeTopic.howManyParameters() >= 3:
-                self.activeTopic.setTemperature()
-
-
-        if (self.topic != str(commandToCall)):
-            self.topic = str(commandToCall)
-            self.activeTopic = commandToCall
-            
-            #ei enää alkutilanne
-
-        if #ei enää alkutilanne
-            return self.activeTopic.status()# laitetaanko päälle
-
-        elif#
-
-        if self.activeTopic.howManyParameters() < self.stateLAITATASTAENUMI:
-#-------------------------------------------
-        if self.dialogueIsOn:
-                #tassa vaiheessa kaskee asian päälle jos paasee tanne asti
-                return "dialogia: " + self.activeTopic.turnOnOff(True)
-        else:
-            #jos viestissa ja kaskyissa on jokin sama niin muutetaan comentoa cutsuttavaa
-            #MUTTA EI SE SITÄ VOI TEHDÄ JOKA KERTA TAI MUUTEN EI TUU DIALOGIA
-            commandToCall = None
-            for cmd in SMSVahtimestari.commands:
-                if (str(cmd) in wordList):
-                    commandToCall = cmd
-
-            #jos asiasanaa ei loytynyt listasta
-            if (commandToCall == None):
-                return SMSVahtimestari.commands[0].status()
-            #kutsutaan kesken kaiken toista topikkia
-            elif (self.topic != str(commandToCall)):
-                self.topic = str(commandToCall)
-                self.activeTopic = commandToCall
-                return commandToCall.status()
-
-            else:
-                self.dialogueIsOn = True
-'''
