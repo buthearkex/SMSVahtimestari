@@ -6,12 +6,13 @@ Contains mocks for receiving and sending text messages.
 
 class SMSReceiver:
     
-    def __init__(self, callback):
+    def __init__(self, callback, number):
         '''
         Mock for receiving text messages.
         Callback should be a function that can handle string-format messages.
         '''
         self.callback = callback
+        self.numberToListen = number
     
     def listen(self):
         '''
@@ -20,9 +21,12 @@ class SMSReceiver:
         self.callback(input())
 
 class SMSSender:
-    '''
-    Mock for sending text messages.
-    '''
+    
+    def __init__(self, number):
+        '''
+        Mock for sending text messages.
+        '''
+        self.numberToSendTo = number
     
     def send(self, msg):
         '''

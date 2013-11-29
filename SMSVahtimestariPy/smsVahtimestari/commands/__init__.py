@@ -1,6 +1,8 @@
-import random
 import datetime
-    
+import random
+import threading
+
+
 class Sauna:
 
     def howManyParameters(self):
@@ -21,26 +23,26 @@ class Sauna:
     
     def status(self):
         if(self.isOn):
-            #when shutting down
-            return "Sauna on päällä " + str(self.currentTemperature)+" °C. Sammuta komennolla *sammuta*."
+            # when shutting down
+            return "Sauna on päällä " + str(self.currentTemperature) + " °C. Sammuta komennolla *sammuta*."
         else:
-            #when firing up
+            # when firing up
             return "Laitetaanko sauna päälle?"
 
     def turnOnOff(self, onOff):
         if (self.isOn and onOff):
-            #firing up dialogue is going for second time by user
+            # firing up dialogue is going for second time by user
             return self.status() 
         elif (self.isOn): 
-            #was on before
+            # was on before
             self.isOn = False 
             return "Sauna sammutetaan."
         elif (onOff):
-            #dialogue is going as normal
+            # dialogue is going as normal
             self.isOn = True 
             return "Mihin aikaan sauna lämpimäksi?" 
         else:
-            #when shutdown selected
+            # when shutdown selected
             return "Saunaa ei lämmitetä." 
 
     def setTimer(self, hours, minutes):
@@ -198,7 +200,6 @@ class Car:
             return "Autoa ei lämmitetä." 
 
     def setTimer(self, hours, minutes):
-
         formattedTime = datetime.datetime.strptime(str(hours) + ":" + str(minutes), "%H:%M")
         diff = formattedTime - self.currentTime
         timeToHeat = self.heatingTimeMin
@@ -256,6 +257,12 @@ class DoorGuard:
             #when shutdown selected
             return "Ovivahtia ei laiteta päälle." 
     
+    def alert(self, sender):
+        def send():
+            sender.send("Joku tuli asuntoon")
+        t = threading.Timer(30, send)
+        t.start()
+    
     def __str__(self):
         return "ovivahti"
 
@@ -271,9 +278,9 @@ class AirConditioning:
     def status(self):
         statusText = "Asunnon lämpötila on nyt " + str(self.currentTemperature)
         if (self.isOn):
-            statusText += " ja ilmastointi on päällä. " +""
+            statusText += " ja ilmastointi on päällä. " + ""
         else:
-            statusText += " ja ilmastointi ei ole päällä. " +"Laitetaanko se päälle?"
+            statusText += " ja ilmastointi ei ole päällä. " + "Laitetaanko se päälle?"
         return statusText
     
     def turnOnOff(self, onOff):
@@ -304,7 +311,7 @@ class Help:
         helpText = ""
         helpText += "Palaa alkuun komennolla *lopeta*. Seuravilla komennoilla pääset\n"
         helpText += "vaikuttamaan kotisi laitteisiin: \n"
-        #helpText += "\n"
+        # helpText += "\n"
         helpText += "sauna\n"
         helpText += "uuni\n"
         helpText += "auto\n"
