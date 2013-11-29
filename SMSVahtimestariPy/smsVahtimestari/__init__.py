@@ -41,7 +41,7 @@ class CommandInterpreter:
     def typo(self):
         return "Kirjoittaisitko asiat edes oikein"
 
-    def isMessageUnderstood(self, wordList, case="0"):
+    def isMessageUnderstood(self, wordList, case=0):
         if case == 0:
             return (self.commandGiven(wordList, CommandInterpreter.POSITIVE) or 
                     self.commandGiven(wordList, CommandInterpreter.RESET) or 
