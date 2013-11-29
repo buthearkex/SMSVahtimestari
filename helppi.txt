@@ -28,3 +28,16 @@ ilmastointi päällä/pois
 ovivahti päällä/pois
 
 =============================================================
+LOPULLINEN MUOTO
+
+
+Palaa alkuun komennolla:
+  "lopeta"
+  
+Seuravilla komennoilla pääset vaikuttamaan kotisi laitteisiin: 
+  "sauna" | "uuni" | "auto" | "ilmastointi" | "ovivahti"
+
+Voit myös antaa komennot suoraan seuraavassa muodossa:
+  "sauna päälle 1930 80" | "sauna pois"
+  "auto 1930"            | "auto pois"
+  "ovivahti päälle"      | "ovivahti pois"
