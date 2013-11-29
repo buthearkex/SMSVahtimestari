@@ -178,7 +178,7 @@ class Car:
     def status(self):
         if (self.isOn):
             #when shutting down
-            return "Auton lämmitys on päällä " + str(self.currentTemperature)+" °C. Sammuta komennolla *sammuta*."
+            return "Auton lämmitys on päällä. Sammuta komennolla *sammuta*."
         else:
             #when firing up
             return "Laitetaanko auton lämmitys päälle?"

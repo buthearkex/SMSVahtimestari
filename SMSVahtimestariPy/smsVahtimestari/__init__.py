@@ -90,7 +90,6 @@ class CommandInterpreter:
     def resetToStartingPoint(self):
         self.activeTopic = None
         self.questionNumber = 0
-        print("***nyt dialogi on alkutilanteessa")
 
     def activeTopicHasNextQuestion(self):
         # print("tultiin tänne mutta miksi")
@@ -133,11 +132,9 @@ class CommandInterpreter:
                 # kysytään seuraavat kysymykset tässä järjestyksessä
                 # status
                 if self.questionNumber == 0:
-                    print("***status")
                     stringToReturn = self.activeTopic.status()
                 # on/off
                 elif self.questionNumber == 1:
-                    print("***on/off")
                     if self.isMessageUnderstood(wordList):
                         laitetaanPaalle = self.commandGiven(wordList, CommandInterpreter.POSITIVE)
                         stringToReturn = self.activeTopic.turnOnOff(laitetaanPaalle)
@@ -148,7 +145,6 @@ class CommandInterpreter:
                         self.questionNumber -= 1
                 # timer
                 elif self.questionNumber == 2:
-                    print("***timer")
                     if self.isMessageUnderstood(wordList, CommandInterpreter.TIME):
                         aika = self.giveTime(wordList)
                         stringToReturn = self.activeTopic.setTimer(aika[0], aika[1])
@@ -157,21 +153,17 @@ class CommandInterpreter:
                         self.questionNumber -= 1
                 # temperature
                 elif self.questionNumber == 3:
-                    print("***temperature")
                     if self.isMessageUnderstood(wordList, CommandInterpreter.TEMPERATURE):
-                        print("tänne tultiin")
                         lampotila = self.giveTemperature(wordList)
                         stringToReturn = self.activeTopic.setTemperature(lampotila)
                     else:  # was not understood
                         stringToReturn = self.typo()
                         self.questionNumber -= 1
                 else:
-                    print("***tänne ei pitäisi päätyä")
                     print(self.questionNumber)
                 self.questionNumber += 1
             
             if willReset or (self.activeTopic is not None and not self.activeTopicHasNextQuestion()):
-                print("***loppustatus - jätetty pois")
                 self.resetToStartingPoint()
         return stringToReturn
 
