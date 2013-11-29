@@ -34,6 +34,10 @@ class CommandInterpreter:
             return True
         return False
 
+    def isMessageUnderstoodAsTime(self, wordList):
+        
+        if wordList = msg.split(' ')
+
     def giveTopic(self, wordList):
         #mystinen logiikka
         
@@ -75,7 +79,7 @@ class CommandInterpreter:
         pyörittää dialogin logiikkaa = controller
         palauttaa dialogin toisen puolen takaisinpäin
         '''
-        palautettavaString = ""
+        stringToReturn = ""
         willReset = False
 
         #alkutilanne
@@ -90,12 +94,12 @@ class CommandInterpreter:
         if self.activeTopic is None:
             #hommaa actiivisen topikin
             if self.giveTopic(wordList) is None:
-                palautettavaString = self.giveAllert()
+                stringToReturn = self.giveAllert()
 
         #"lopeta" command is given
         if self.resetCommandWasGiven(wordList):
             self.resetToStartingPoint()
-            palautettavaString = "Palattiin alkuun."
+            stringToReturn = "Palattiin alkuun."
 
         #topic is selected
         if self.activeTopic is not None:
@@ -104,29 +108,33 @@ class CommandInterpreter:
                 #status
                 if self.questionNumber == 0:
                     print("***status")
-                    palautettavaString = self.activeTopic.status()
+                    stringToReturn = self.activeTopic.status()
                 #on/off
                 elif self.questionNumber == 1:
                     print("***on/off")
                     if self.isMessageUnderstood(wordList):
                         laitetaanPaalle = self.isPositive(wordList)#gives boolean
-                        palautettavaString = self.activeTopic.turnOnOff(laitetaanPaalle)
+                        stringToReturn = self.activeTopic.turnOnOff(laitetaanPaalle)
                         if not laitetaanPaalle:
                             willReset = True
-                    else:
-                        palautettavaString = self.giveAllert()
+                    else:#was not understood
+                        stringToReturn = self.giveAllert()
                         self.questionNumber -= 1
                 #timer
                 elif self.questionNumber == 2:
                     print("***timer")
-                    tunnit = self.giveHours(wordList)
-                    minuutit = self.giveMinutes(wordList)
-                    palautettavaString = self.activeTopic.setTimer(tunnit, minuutit)
+                    if self.isMessageUnderstoodAsTime(wordList):
+                        tunnit = self.giveHours(wordList)
+                        minuutit = self.giveMinutes(wordList)
+                        stringToReturn = self.activeTopic.setTimer(tunnit, minuutit)
+                    else:#was not understood
+                        stringToReturn = self.giveAllert()
+                        self.questionNumber -= 1
                 #temperature
                 elif self.questionNumber == 3:
                     print("***temperature")
                     lampotila = self.giveTemperature(wordList)
-                    palautettavaString = self.activeTopic.setTemperature(lampotila)
+                    stringToReturn = self.activeTopic.setTemperature(lampotila)
                 else:
                     print("***tänne ei pitäisi päätyä")
                     print(self.questionNumber)
@@ -136,7 +144,7 @@ class CommandInterpreter:
             if willReset or (self.activeTopic is not None and not self.activeTopicHasNextQuestion()):
                 print("***loppustatus - jätetty pois")
                 #annetaan loppustatus
-                #palautettavaString = self.activeTopic.status()
+                #stringToReturn = self.activeTopic.status()
                 
                 #asia on käsitelty
                 self.resetToStartingPoint()
@@ -145,7 +153,7 @@ class CommandInterpreter:
         #if self.resetCommandWasGiven(wordList):
         #    self.resetToStartingPoint()
 
-        return palautettavaString
+        return stringToReturn
 
 class SMSVahtimestari:
     commands = [Help(), Sauna(), Oven(), Car(), AirConditioning(), Electricity(), DoorGuard()]
