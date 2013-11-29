@@ -1,6 +1,8 @@
-import random
 import datetime
-    
+import random
+import threading
+
+
 class Sauna:
 
     def howManyParameters(self):
@@ -21,26 +23,26 @@ class Sauna:
     
     def status(self):
         if(self.isOn):
-            #when shutting down
-            return "Sauna on päällä " + str(self.currentTemperature)+" °C. Sammuta komennolla *sammuta*."
+            # when shutting down
+            return "Sauna on päällä " + str(self.currentTemperature) + " °C. Sammuta komennolla *sammuta*."
         else:
-            #when firing up
+            # when firing up
             return "Laitetaanko sauna päälle?"
 
     def turnOnOff(self, onOff):
         if (self.isOn and onOff):
-            #firing up dialogue is going for second time by user
+            # firing up dialogue is going for second time by user
             return self.status() 
         elif (self.isOn): 
-            #was on before
+            # was on before
             self.isOn = False 
             return "Sauna sammutetaan."
         elif (onOff):
-            #dialogue is going as normal
+            # dialogue is going as normal
             self.isOn = True 
             return "Mihin aikaan sauna lämpimäksi?" 
         else:
-            #when shutdown selected
+            # when shutdown selected
             return "Saunaa ei lämmitetä." 
 
     def setTimer(self, hours, minutes):
@@ -52,8 +54,8 @@ class Sauna:
         formattedTime = datetime.datetime.strptime(str(self.targetTimeHour) + ":" + str(self.targetTimeMin), "%H:%M")
         diff = formattedTime - self.currentTime
         timeToHeat = self.giveHeatingTimeMin(temperature)
-        diffMin = diff.seconds/60
-        #no time for heating
+        diffMin = diff.seconds / 60
+        # no time for heating
         print(diffMin) 
         print(timeToHeat)
 
@@ -69,8 +71,8 @@ class Sauna:
         else:
             self.isOn = True
             minuteStr = str(self.targetTimeMin)
-            if int(self.targetTimeMin) < 10:#smoothly format minutes like 12.01 not 12.1
-                minuteStr = "0"+ str(self.targetTimeMin)
+            if int(self.targetTimeMin) < 10:  # smoothly format minutes like 12.01 not 12.1
+                minuteStr = "0" + str(self.targetTimeMin)
             warmAtStr = str(self.targetTimeHour) + "." + minuteStr
             return "Sauna lämpötilassa " + str(temperature) + " klo " + warmAtStr
 
@@ -93,10 +95,10 @@ class Oven:
     
     def status(self):
         if(self.isOn):
-           return "Sauna on päällä " + str(self.currentTemperature)+" °C."
+           return "Sauna on päällä " + str(self.currentTemperature) + " °C."
         else:
             return "Laitetaanko uuni päälle?"
-            #return "uuni ei ole päällä ja sen lämpö on nyt " + str(self.currentTemperature)
+            # return "uuni ei ole päällä ja sen lämpö on nyt " + str(self.currentTemperature)
  
     def turnOnOff(self, onOff):
         if (self.isOn and onOff):
@@ -116,11 +118,11 @@ class Oven:
     def setTimer(self, hours, minutes):
         timerTime = datetime.datetime.strptime(str(hours) + ":" + str(minutes), "%H:%M")
         diff = self.currentTime - timerTime
-        realDiff = self.heatingTimeMin - int(diff.seconds/60)
+        realDiff = self.heatingTimeMin - int(diff.seconds / 60)
         if (realDiff < 0):
             return "Liian vähän aikaa, aloitetaan lämmitys nyt, valmista on... "
         else:
-            return "Mihin lämpötilaan?"#"Kelpaa, lämpenee valmiiksi kello " + str(hours) + ":" + str(minutes)
+            return "Mihin lämpötilaan?"  # "Kelpaa, lämpenee valmiiksi kello " + str(hours) + ":" + str(minutes)
 
     def setTemperature(self, temperature):
         if (temperature > 120 and temperature < 20):
@@ -162,7 +164,7 @@ class Car:
     def setTimer(self, hours, minutes):
         timerTime = datetime.datetime.strptime(str(hours) + ":" + str(minutes), "%H:%M")
         diff = self.currentTime - timerTime
-        realDiff = self.heatingTimeMin - int(diff.seconds/60)
+        realDiff = self.heatingTimeMin - int(diff.seconds / 60)
         if (realDiff < 0):
             return "Liian vähän aikaa, aloitetaan lämmitys nyt, valmista on... "
         else:
@@ -195,7 +197,13 @@ class DoorGuard:
             self.isOn = True 
             return "Ovivahti laitettiin päälle."
         else:
-            return "Ovivahti ei ollut päällä" 
+            return "Ovivahti ei ollut päällä"
+    
+    def alert(self, sender):
+        def send():
+            sender.send("Joku tuli asuntoon")
+        t = threading.Timer(30, send)
+        t.start()
     
     def __str__(self):
         return "ovivahti"
@@ -212,9 +220,9 @@ class AirConditioning:
     def status(self):
         statusText = "Asunnon lämpötila on nyt " + str(self.currentTemperature)
         if (self.isOn):
-            statusText += " ja ilmastointi on päällä. " +""
+            statusText += " ja ilmastointi on päällä. " + ""
         else:
-            statusText += " ja ilmastointi ei ole päällä. " +"Laitetaanko se päälle?"
+            statusText += " ja ilmastointi ei ole päällä. " + "Laitetaanko se päälle?"
         return statusText
     
     def turnOnOff(self, onOff):
@@ -241,19 +249,19 @@ class Help:
         helpText = ""
         helpText += "Palaa alkuun komennolla *lopeta*. Seuravilla komennoilla pääset\n"
         helpText += "vaikuttamaan kotisi laitteisiin: \n"
-        #helpText += "\n"
+        # helpText += "\n"
         helpText += "sauna\n"
         helpText += "uuni\n"
         helpText += "auto\n"
         helpText += "ilmastointi\n"
         helpText += "ovivahti\n"
-        #helpText += "\n"
-        #helpText += "Voit myös antaa komennot suoraan seuraavassa muodossa:\n"
-        #helpText += "sauna 1930 80/sauna pois\n"
-        #helpText += "uuni 1930 200/uuni pois\n"
-        #helpText += "auto 1930/auto pois\n"
-        #helpText += "ilmastointi päällä/pois\n"
-        #helpText += "ovivahti päällä/pois\n"
+        # helpText += "\n"
+        # helpText += "Voit myös antaa komennot suoraan seuraavassa muodossa:\n"
+        # helpText += "sauna 1930 80/sauna pois\n"
+        # helpText += "uuni 1930 200/uuni pois\n"
+        # helpText += "auto 1930/auto pois\n"
+        # helpText += "ilmastointi päällä/pois\n"
+        # helpText += "ovivahti päällä/pois\n"
         return helpText
 
     def __str__(self):

@@ -1,8 +1,9 @@
-import uuid
 import sys
+import threading
+import uuid
 
-from smsVahtimestari.smsMocks import *
 from smsVahtimestari.commands import *
+from smsVahtimestari.smsMocks import *
 
 
 class CommandInterpreter:
@@ -160,7 +161,7 @@ class CommandInterpreter:
                     if self.isMessageUnderstood(wordList, CommandInterpreter.TEMPERATURE):
                         lampotila = self.giveTemperature(wordList)
                         stringToReturn = self.activeTopic.setTemperature(lampotila)
-                    else: # was not understood
+                    else:  # was not understood
                         stringToReturn = self.typo()
                         self.questionNumber -= 1
                 else:
@@ -182,6 +183,7 @@ class SMSVahtimestari:
         self.receiver = SMSReceiver(self.handleMessage, self.number)
         self.sender = SMSSender(self.number)
         self.receiver.listen()
+        SMSVahtimestari[5].alert(self.sender)
 
     def handleMessage(self, msg):
         self.sender.send(SMSVahtimestari.commandInterpreter.interpret(msg))
