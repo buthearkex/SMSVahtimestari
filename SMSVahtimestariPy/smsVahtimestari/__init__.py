@@ -164,7 +164,7 @@ class CommandInterpreter:
         return stringToReturn
 
 class SMSVahtimestari:
-    commands = [Help(), Sauna(), Oven(), Car(), AirConditioning(), Electricity(), DoorGuard()]
+    commands = [Help(), Sauna(), Oven(), Car(), AirConditioning(), DoorGuard()]
     commandInterpreter = CommandInterpreter()
 
     def __init__(self):
