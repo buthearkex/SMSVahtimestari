@@ -15,21 +15,26 @@ class Sauna:
     
     def status(self):
         if(self.isOn):
-            return "Sauna on lämpenemässä ja sen lämpö on nyt " + str(self.currentTemperature)
+            #when shutting down
+            return "Sauna on päällä " + str(self.currentTemperature)+" °C."
         else:
+            #when firing up
             return "Laitetaanko sauna päälle?"
-            #return "Sauna ei ole päällä ja sen lämpö on nyt " + str(self.currentTemperature)
 
     def turnOnOff(self, onOff):
         if (self.isOn and onOff):
-            return "kiuas on jo päällä" 
+            #firing up dialogue is going for second time by user
+            return self.status() 
         elif (self.isOn): 
+            #was on before
             self.isOn = False 
-            return "kiuas sammutetaan"
-        elif (onOff): 
+            return "Sauna sammutetaan."
+        elif (onOff):
+            #dialogue is going as normal
             self.isOn = True 
             return "Mihin aikaan sauna lämpimäksi?" 
         else:
+            #
             return "Saunaa ei lämmitetä." 
 
     def setTimer(self, hours, minutes):
@@ -68,7 +73,7 @@ class Oven:
     
     def status(self):
         if(self.isOn):
-            return "uuni on lämpenemässä ja sen lämpö on nyt " + str(self.currentTemperature)
+           return "Sauna on päällä " + str(self.currentTemperature)+" °C."
         else:
             return "Laitetaanko uuni päälle?"
             #return "uuni ei ole päällä ja sen lämpö on nyt " + str(self.currentTemperature)
