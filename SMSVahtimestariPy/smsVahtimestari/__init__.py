@@ -1,4 +1,5 @@
 import uuid
+import sys
 
 from smsVahtimestari.smsMocks import *
 from smsVahtimestari.commands import *
@@ -177,8 +178,9 @@ class SMSVahtimestari:
     commandInterpreter = CommandInterpreter()
 
     def __init__(self):
-        self.receiver = SMSReceiver(self.handleMessage)
-        self.sender = SMSSender()
+        self.number = str(sys.argv)
+        self.receiver = SMSReceiver(self.handleMessage, self.number)
+        self.sender = SMSSender(self.number)
         self.receiver.listen()
 
     def handleMessage(self, msg):
