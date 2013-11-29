@@ -40,7 +40,7 @@ class Sauna:
     def setTimer(self, hours, minutes):
         timerTime = datetime.datetime.strptime(str(hours) + ":" + str(minutes), "%H:%M")
         diff = self.currentTime - timerTime
-        realDiff = self.heatingTimeMin - diff.minutes
+        realDiff = self.heatingTimeMin - int(diff.seconds/60)
         if (realDiff < 0):
             self.warmAt = self.currentTime.hours + "." + self.currentTime.minutes + self.heatingTimeMin
             return "Sauna ei ehdi lämmetä ajoissa, mutta lämmitys aloitetaan. Mihin lämpötilaan?"
@@ -97,8 +97,7 @@ class Oven:
     def setTimer(self, hours, minutes):
         timerTime = datetime.datetime.strptime(str(hours) + ":" + str(minutes), "%H:%M")
         diff = self.currentTime - timerTime
-        realDiff = self.heatingTimeMin - diff.minutes
-        realDiff = self.heatingTimeMin - diff
+        realDiff = self.heatingTimeMin - int(diff.seconds/60)
         if (realDiff < 0):
             return "Liian vähän aikaa, aloitetaan lämmitys nyt, valmista on... "
         else:
@@ -144,8 +143,7 @@ class Car:
     def setTimer(self, hours, minutes):
         timerTime = datetime.datetime.strptime(str(hours) + ":" + str(minutes), "%H:%M")
         diff = self.currentTime - timerTime
-        realDiff = self.heatingTimeMin - diff.minutes
-        realDiff = self.heatingTimeMin - diff
+        realDiff = self.heatingTimeMin - int(diff.seconds/60)
         if (realDiff < 0):
             return "Liian vähän aikaa, aloitetaan lämmitys nyt, valmista on... "
         else:
