@@ -1,3 +1,4 @@
+import string
 import sys
 import threading
 import uuid
@@ -120,9 +121,7 @@ class CommandInterpreter:
         # prosessoi viestin osiin ja yhtenäistaa muotoilun
         wordList = msg.split(' ')
         for idx, word in enumerate(wordList):
-            word.lower()
-            word.strip()
-            wordList[idx] = word
+            wordList[idx] = word.lower().strip()
 
         # starting point
         if self.activeTopic is None:
