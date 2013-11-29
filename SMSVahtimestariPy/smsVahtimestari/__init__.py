@@ -114,6 +114,7 @@ class CommandInterpreter:
         '''
         stringToReturn = ""
         willReset = False
+        willTryToShortCut = False
 
         # alkutilanne
         # prosessoi viestin osiin ja yhtenäistaa muotoilun
@@ -126,8 +127,30 @@ class CommandInterpreter:
         # starting point
         if self.activeTopic is None:
             # hommaa actiivisen topikin
-            if self.giveTopic(wordList) is None:
+            self.giveTopic(wordList)
+            if self.activeTopic is None:
                 stringToReturn = self.typo()
+            else:
+                if len(wordList) == self.activeTopic.howManyParameters()+1:#+1 is for topic name
+                    willTryToShortCut = True
+                    #willReset = True
+                    #if len(wordList) > 0:
+                        #stringToReturn = self.activeTopic.status()
+                    if len(wordList) > 1:
+                        print("tassataas.....")
+                        laitetaanPaalle = self.commandGiven(wordList, CommandInterpreter.POSITIVE)
+                        stringToReturn = self.activeTopic.turnOnOff(laitetaanPaalle)
+                    if len(wordList) > 2:
+                        print("selevä....")
+                        aika = self.giveTime(wordList)
+                        stringToReturn = self.activeTopic.setTimer(aika[0], aika[1])
+                    if len(wordList) > 3:
+                        print("kaikissa....")
+                        lampotila = self.giveTemperature(wordList)
+                        stringToReturn = self.activeTopic.setTemperature(lampotila)
+
+                    #reseting
+                    self.resetToStartingPoint()
 
         # "lopeta" command is given
         if self.commandGiven(wordList, CommandInterpreter.RESET):
@@ -135,7 +158,7 @@ class CommandInterpreter:
             stringToReturn = "Palattiin alkuun."
 
         # topic is selected
-        if self.activeTopic is not None:
+        if self.activeTopic is not None and not willTryToShortCut:
             if self.activeTopicHasNextQuestion(): 
                 # kysytään seuraavat kysymykset tässä järjestyksessä
                 # status
@@ -173,6 +196,7 @@ class CommandInterpreter:
             
             if willReset or (self.activeTopic is not None and not self.activeTopicHasNextQuestion()):
                 self.resetToStartingPoint()
+
         return stringToReturn
 
 class SMSVahtimestari:
