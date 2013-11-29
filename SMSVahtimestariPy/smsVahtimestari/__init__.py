@@ -142,9 +142,8 @@ class CommandInterpreter:
                 elif self.questionNumber == 2:
                     print("***timer")
                     if self.isMessageUnderstoodAsTime(wordList):
-                        tunnit = self.giveHours(wordList)
-                        minuutit = self.giveMinutes(wordList)
-                        stringToReturn = self.activeTopic.setTimer(tunnit, minuutit)
+                        aika = self.giveTime(wordList)
+                        stringToReturn = self.activeTopic.setTimer(aika[0], aika[1])
                     else:#was not understood
                         stringToReturn = self.giveAllert()
                         self.questionNumber -= 1
