@@ -147,7 +147,7 @@ class CommandInterpreter:
                 # timer
                 elif self.questionNumber == 2:
                     print("***timer")
-                    if self.isMessageUnderstoodAsTime(wordList):
+                    if self.isMessageUnderstood(wordList, CommandInterpreter.TIME):
                         aika = self.giveTime(wordList)
                         stringToReturn = self.activeTopic.setTimer(aika[0], aika[1])
                     else:  # was not understood
@@ -156,8 +156,12 @@ class CommandInterpreter:
                 # temperature
                 elif self.questionNumber == 3:
                     print("***temperature")
-                    lampotila = self.giveTemperature(wordList)
-                    stringToReturn = self.activeTopic.setTemperature(lampotila)
+                    if self.isMessageUnderstood(wordList, CommandInterpreter.TEMPERATURE):
+                        lampotila = self.giveTemperature(wordList)
+                        stringToReturn = self.activeTopic.setTemperature(lampotila)
+                    else: # was not understood
+                        stringToReturn = self.typo()
+                        self.questionNumber -= 1
                 else:
                     print("***tänne ei pitäisi päätyä")
                     print(self.questionNumber)
