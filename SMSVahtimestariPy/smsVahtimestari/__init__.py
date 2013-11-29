@@ -208,7 +208,6 @@ class SMSVahtimestari:
         self.receiver = SMSReceiver(self.handleMessage, self.number)
         self.sender = SMSSender(self.number)
         self.receiver.listen()
-        SMSVahtimestari[5].alert(self.sender)
 
     def handleMessage(self, msg):
         self.sender.send(SMSVahtimestari.commandInterpreter.interpret(msg))
