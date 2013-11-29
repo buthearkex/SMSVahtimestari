@@ -11,7 +11,7 @@ class Sauna:
         self.currentTemperature = 25
         self.currentTime = datetime.datetime.now()
         self.isOn = False
-        self.warmAt = 0,0
+        self.warmAt = "XX.XX"
     
     def status(self):
         if(self.isOn):
@@ -34,25 +34,26 @@ class Sauna:
             self.isOn = True 
             return "Mihin aikaan sauna lämpimäksi?" 
         else:
-            #
+            #when shutdown selected
             return "Saunaa ei lämmitetä." 
 
     def setTimer(self, hours, minutes):
-        timerTime = datetime.datetime.strptime(hours + ":" + minutes, "%H:%M")
+        timerTime = datetime.datetime.strptime(str(hours) + ":" + str(minutes), "%H:%M")
         diff = self.currentTime - timerTime
         realDiff = self.heatingTimeMin - diff.minutes
         if (realDiff < 0):
-            return "Sauna ei ehdi lämmetä ajoissa, mutta lämmitys aloitetaan."
+            self.warmAt = self.currentTime.hours + "." + self.currentTime.minutes + self.heatingTimeMin
+            return "Sauna ei ehdi lämmetä ajoissa, mutta lämmitys aloitetaan. Mihin lämpötilaan?"
         else:
             self.isOn = True
-            warmAt = hours, minutes
+            self.warmAt = hours + "." + minutes
             return "Mihin lämpötilaan?"
 
     def setTemperature(self, temperature):
         if (temperature > 120 and temperature < 40):
             return "Anna luku väliltä 40-120"
         else:
-            return "Sauna lämpötilassa " + str(temperature) + " klo " + "XXXXXX"
+            return "Sauna lämpötilassa " + str(temperature) + " klo " + self.warmAt
 
     def getCurrentTemperature(self):
         return self.currentTemperature
@@ -94,7 +95,7 @@ class Oven:
         return self.currentTemperature
 
     def setTimer(self, hours, minutes):
-        timerTime = datetime.datetime.strptime(hours + ":" + minutes, "%H:%M")
+        timerTime = datetime.datetime.strptime(str(hours) + ":" + str(minutes), "%H:%M")
         diff = self.currentTime - timerTime
         realDiff = self.heatingTimeMin - diff.minutes
         realDiff = self.heatingTimeMin - diff
@@ -141,7 +142,7 @@ class Car:
             return "Auton lämmitys ei ollut päällä" 
 
     def setTimer(self, hours, minutes):
-        timerTime = datetime.datetime.strptime(hours + ":" + minutes, "%H:%M")
+        timerTime = datetime.datetime.strptime(str(hours) + ":" + str(minutes), "%H:%M")
         diff = self.currentTime - timerTime
         realDiff = self.heatingTimeMin - diff.minutes
         realDiff = self.heatingTimeMin - diff
