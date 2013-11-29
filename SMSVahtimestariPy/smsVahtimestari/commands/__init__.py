@@ -7,7 +7,7 @@ class Sauna:
         return 3
     
     def __init__(self):
-        self.heatingTimeMin = datetime.timedelta(minutes = 45)
+        self.heatingTimeMin = 45
         self.currentTemperature = 25
         self.currentTime = datetime.datetime.now()
         self.isOn = False
@@ -66,7 +66,7 @@ class Oven:
         return 3
     
     def __init__(self):
-        self.heatingTimeMin = datetime.timedelta(minutes = 45)
+        self.heatingTimeMin = 45
         self.currentTemperature = 25
         self.currentTime = datetime.datetime.now()
         self.isOn = False
@@ -118,7 +118,7 @@ class Car:
         return 2
     
     def __init__(self):
-        self.heatingTimeMin = datetime.timedelta(minutes=15)
+        self.heatingTimeMin = 15
         self.currentTime = datetime.datetime.now()
         self.isOn = False    
 
