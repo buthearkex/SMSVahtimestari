@@ -63,17 +63,21 @@ class CommandInterpreter:
         #self.activeTopic = Sauna()
         self.activeTopic = commandToCall
 
-    def giveHours(self, msg):
-        #mystinen logiikka
-        return 20
+    def giveTime(self, wordList):
+        for word in wordList:
+            if word.isdigit():
+                return [int(word[:2]), int(word[2:4])]
+            else:
+                others = word.split(":")
+                if len(others) != 2:
+                    others = word.split(".")
+                if len(others) == 2:
+                    return others
 
-    def giveMinutes(self, msg):
-        #mystinen logiikka
-        return 20
-
-    def giveTemperature(self, msg):
-        #mystinen logiikka
-        return 80
+    def giveTemperature(self, wordList):
+        for word in wordList:
+            if word.isdigit():
+                return int(word)
 
     def resetToStartingPoint(self):
         self.activeTopic = None
