@@ -7,16 +7,22 @@ class Sauna:
         return 3
     
     def __init__(self):
-        self.heatingTimeMin = 45
+        self.heatingSpeed = 1.2
         self.currentTemperature = 25
         self.currentTime = datetime.datetime.now()
         self.isOn = False
-        self.warmAt = "XX.XX"
+        self.targetTimeHour = 0
+        self.targetTimeMin = 0
+
+    def giveHeatingTimeMin(self, targetTemperature):
+        delta = targetTemperature - self.currentTemperature
+        timeMin = int(delta / self.heatingSpeed)
+        return timeMin
     
     def status(self):
         if(self.isOn):
             #when shutting down
-            return "Sauna on päällä " + str(self.currentTemperature)+" °C."
+            return "Sauna on päällä " + str(self.currentTemperature)+" °C. Sammuta komennolla *sammuta*."
         else:
             #when firing up
             return "Laitetaanko sauna päälle?"
@@ -38,25 +44,35 @@ class Sauna:
             return "Saunaa ei lämmitetä." 
 
     def setTimer(self, hours, minutes):
-        formattedTime = datetime.datetime.strptime(str(hours) + ":" + str(minutes), "%H:%M")
-        diff = formattedTime - self.currentTime 
-        print(diff.seconds/60)#minutes
-        if (diff.seconds/60 < self.heatingTimeMin):
-            self.warmAt = str(self.currentTime.hour) + "." + str(self.currentTime.minute + self.heatingTimeMin)
-            return "Sauna ei ehdi lämmetä ajoissa, mutta lämmitys aloitetaan. Mihin lämpötilaan?"
-        else:
-            self.isOn = True
-            minuteStr = str(minutes)
-            if minutes < 10:#smoothly format minutes like 12.01 not 12.1
-                minuteStr = "0"+ str(minutes)
-            self.warmAt = str(hours) + "." + minuteStr
-            return "Mihin lämpötilaan?"
+        self.targetTimeHour = hours
+        self.targetTimeMin = minutes
+        return "Mihin lämpötilaan?"
 
     def setTemperature(self, temperature):
-        if (temperature > 120 and temperature < 40):
-            return "Anna luku väliltä 40-120"
+        formattedTime = datetime.datetime.strptime(str(self.targetTimeHour) + ":" + str(self.targetTimeMin), "%H:%M")
+        diff = formattedTime - self.currentTime
+        timeToHeat = self.giveHeatingTimeMin(temperature)
+        diffMin = diff.seconds/60
+        #no time for heating
+        print(diffMin) 
+        print(timeToHeat)
+
+        if (diffMin < timeToHeat):
+            extraHours = 0
+            while timeToHeat > 60:
+                print("käytiin täällä")
+                extraHours = 1
+                timeToHeat - 60
+            print(extraHours)
+            warmAtStr = str(self.currentTime.hour + extraHours) + "." + str(int(self.currentTime.minute + diffMin))
+            return "Sauna ei ehdi lämmetä ajoissa, mutta lämmitys aloitetaan. Valmis " + warmAtStr
         else:
-            return "Sauna lämpötilassa " + str(temperature) + " klo " + self.warmAt
+            self.isOn = True
+            minuteStr = str(self.targetTimeMin)
+            if int(self.targetTimeMin) < 10:#smoothly format minutes like 12.01 not 12.1
+                minuteStr = "0"+ str(self.targetTimeMin)
+            warmAtStr = str(self.targetTimeHour) + "." + minuteStr
+            return "Sauna lämpötilassa " + str(temperature) + " klo " + warmAtStr
 
     def getCurrentTemperature(self):
         return self.currentTemperature
