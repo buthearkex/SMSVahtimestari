@@ -204,7 +204,6 @@ class Car:
         diff = formattedTime - self.currentTime
         timeToHeat = self.heatingTimeMin
         diffMin = diff.seconds/60
-        warmAtStr = str(hours) + "." + str(minutes)
         #no time for heating
         if (diffMin < timeToHeat):
             totalMinutes = self.currentTime.minute + timeToHeat
@@ -222,6 +221,10 @@ class Car:
 
             return "Liian vähän aikaa. Lämmitys aloitetaan nyt, valmista on " + warmAtStr
         else:
+            mins = str(minutes)
+            if len(min) < 2:
+                mins = "0" + mins
+            warmAtStr = str(hours) + "." + mins
             return "Kelpaa, lämpenee valmiiksi kello " + warmAtStr
     
     def __str__(self):

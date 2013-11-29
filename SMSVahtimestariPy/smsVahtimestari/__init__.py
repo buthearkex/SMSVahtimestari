@@ -74,7 +74,15 @@ class CommandInterpreter:
     def giveTime(self, wordList):
         for word in wordList:
             if word.isdigit():
-                return [int(word[:2]), int(word[2:4])]
+                if len(str(word)) < 4:
+                    if len(str(word)) == 3:
+                        return [int(word[:1]), int(word[1:3])]
+                    elif len(str(word)) == 2:
+                        return [0, int(word)]
+                    else:
+                        return [0, int(word)]
+                else:
+                    return [int(word[:2]), int(word[2:4])]
             else:
                 others = word.split(":")
                 if len(others) != 2:
