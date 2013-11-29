@@ -33,11 +33,9 @@ class Sauna:
             return "Saunaa ei lämmitetä." 
 
     def setTimer(self, hours, minutes):
-        year = self.currentTime.year
-        month = self.currentTime.month
-        day = self.currentTime.day
-        diff = datetime.timedelta(self.currentTime, datetime.datetime(year, month, day, hours, minutes))
-        realDiff = self.heatingTimeMin - diff
+        timerTime = datetime.datetime.strptime(hours + ":" + minutes, "%H:%M")
+        diff = self.currentTime - timerTime
+        realDiff = self.heatingTimeMin - diff.minutes
         if (realDiff < 0):
             return "Sauna ei ehdi lämmetä ajoissa, mutta lämmitys aloitetaan."
         else:
@@ -91,10 +89,9 @@ class Oven:
         return self.currentTemperature
 
     def setTimer(self, hours, minutes):
-        year = self.currentTime.year
-        month = self.currentTime.month
-        day = self.currentTime.day
-        diff = datetime.timedelta(self.currentTime, datetime.datetime(year, month, day, hours, minutes))
+        timerTime = datetime.datetime.strptime(hours + ":" + minutes, "%H:%M")
+        diff = self.currentTime - timerTime
+        realDiff = self.heatingTimeMin - diff.minutes
         realDiff = self.heatingTimeMin - diff
         if (realDiff < 0):
             return "Liian vähän aikaa, aloitetaan lämmitys nyt, valmista on... "
@@ -139,10 +136,9 @@ class Car:
             return "Auton lämmitys ei ollut päällä" 
 
     def setTimer(self, hours, minutes):
-        year = self.currentTime.year
-        month = self.currentTime.month
-        day = self.currentTime.day
-        diff = datetime.timedelta(self.currentTime, datetime.datetime(year, month, day, hours, minutes))
+        timerTime = datetime.datetime.strptime(hours + ":" + minutes, "%H:%M")
+        diff = self.currentTime - timerTime
+        realDiff = self.heatingTimeMin - diff.minutes
         realDiff = self.heatingTimeMin - diff
         if (realDiff < 0):
             return "Liian vähän aikaa, aloitetaan lämmitys nyt, valmista on... "
