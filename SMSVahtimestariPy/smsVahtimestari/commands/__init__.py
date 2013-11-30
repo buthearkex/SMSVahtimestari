@@ -302,7 +302,7 @@ class AirConditioning:
 class Help:
 
     def howManyParameters(self):
-        return 1
+        return 0
     
     def status(self):
         helpText = ""

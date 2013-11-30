@@ -110,7 +110,6 @@ class CommandInterpreter:
         self.questionNumber = 0
 
     def activeTopicHasNextQuestion(self):
-        # print("tultiin tänne mutta miksi")
         if self.questionNumber <= self.activeTopic.howManyParameters():
             return True
         return False
@@ -139,7 +138,7 @@ class CommandInterpreter:
             if self.activeTopic is None:
                 stringToReturn = self.typo()
             else:
-                if len(wordList) == self.activeTopic.howManyParameters()+1:#+1 is for topic name
+                if self.activeTopic.howManyParameters() > 0 and len(wordList) == self.activeTopic.howManyParameters()+1:#+1 is for topic name
                     willTryToShortCut = True
                     if len(wordList) > 1:
                         laitetaanPaalle = self.commandGiven(wordList, CommandInterpreter.POSITIVE)
@@ -171,7 +170,7 @@ class CommandInterpreter:
                     if self.isMessageUnderstood(wordList):
                         laitetaanPaalle = self.commandGiven(wordList, CommandInterpreter.POSITIVE)
                         stringToReturn = self.activeTopic.turnOnOff(laitetaanPaalle)
-                        if not laitetaanPaalle:
+                        if not laitetaanPaalle:#no answer
                             willReset = True
                     else:  # was not understood
                         stringToReturn = self.typo()
