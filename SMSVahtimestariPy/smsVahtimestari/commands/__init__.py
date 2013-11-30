@@ -73,7 +73,7 @@ class Sauna:
         else:
             minuteStr = str(self.targetTimeMin)
             #smoothly format minutes like 12.01 not 12.1
-            if int(self.targetTimeMin) < 10:
+            if int(self.targetTimeMin) < 10 and int(self.targetTimeMin) != 0:
                 minuteStr = "0"+ str(self.targetTimeMin)
             warmAtStr = str(self.targetTimeHour) + "." + minuteStr
             if temperature > 150:
@@ -156,7 +156,7 @@ class Oven:
         else:
             minuteStr = str(self.targetTimeMin)
             #smoothly format minutes like 12.01 not 12.1
-            if int(self.targetTimeMin) < 10:
+            if int(self.targetTimeMin) < 10 and int(self.targetTimeMin) != 0:
                 minuteStr = "0"+ str(self.targetTimeMin)
             warmAtStr = str(self.targetTimeHour) + "." + minuteStr
             return "Uuni lämpötilassa " + str(temperature) + " klo " + warmAtStr
