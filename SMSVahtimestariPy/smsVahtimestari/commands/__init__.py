@@ -312,7 +312,7 @@ class Help:
         helpText = """Palaa alkuun komennolla:
   *alkuun* tai *lopeta*
 
-Seuravilla komennoilla pääset vaikuttamaan kotisi laitteisiin: 
+Seuraavilla komennoilla pääset vaikuttamaan kotisi laitteisiin: 
   *sauna* | *uuni* | *auto* | *ilmastointi* | *ovivahti*
 
 Voit myös antaa komennot suoraan seuraavassa muodossa:
