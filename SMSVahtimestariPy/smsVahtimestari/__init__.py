@@ -42,17 +42,8 @@ class CommandInterpreter:
         return len(set(comparable) & set(wordList)) > 0
 
     def typo(self):
-        return """Viestiä ei ymmärretty. Käskyllä "apua" saat pääkäskyt.
-* Mikäli yritit antaa ajankohdan, tulee sen olla jossain seuraavista muodoista:
-    0700 TAI 700 TAI 07:00 TAI 7:00 TAI 07.00 TAI 7.00
-* Mikäli yritit antaa lämpötilan, pitää sen olla muotoa: 50 TAI 200
-* Mikäli yritit laittaa laitteen päälle, pitää käskyn olla muotoa:
-    päälle TAI k TAI kyllä tai joo (isoilla kirjaimilla ei ole väliä)
-* Mikäli yritit laittaa laitteen pois päältä, pitää käskyn olla muotoa:
-    sammuta TAI e TAI ei TAI pois TAI älä (isoilla kirjaimilla ei ole väliä)
-* Mikäli yritit palata alkuun, pitää käskyn olla muotoa:
-    lopeta TAI palaa TAI alkuun (isoilla kirjaimilla ei ole väliä)"""
-
+        return """Viestiä ei ymmärretty. Tarkista muotoilu seuraavista esimerkeistä
+  *apua* *kyllä* *ei* *alkuun* | aika *12.15* | lämpö *120*"""
     def isMessageUnderstood(self, wordList, case=0):
         if case == 0:
             return (self.commandGiven(wordList, CommandInterpreter.POSITIVE) or 

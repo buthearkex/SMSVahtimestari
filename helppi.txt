@@ -32,12 +32,33 @@ LOPULLINEN MUOTO
 
 
 Palaa alkuun komennolla:
-  "lopeta"
-  
+  *alkuun* tai *lopeta*
+
 Seuravilla komennoilla pääset vaikuttamaan kotisi laitteisiin: 
-  "sauna" | "uuni" | "auto" | "ilmastointi" | "ovivahti"
+  *sauna* | *uuni* | *auto* | *ilmastointi* | *ovivahti*
 
 Voit myös antaa komennot suoraan seuraavassa muodossa:
-  "sauna päälle 1930 80" | "sauna pois"
-  "auto 1930"            | "auto pois"
-  "ovivahti päälle"      | "ovivahti pois"
+  *sauna päälle 1930 80* | *sauna pois*
+  *auto 19.30*           | *auto pois*
+  *ovivahti päälle*      | *ovivahti pois*
+
+==============================================================
+LOPULLINEN TYPOILMO
+
+
+Viestiä ei ymmärretty. Tarkista muotoilu seuraavista esimerkeistä
+  *apua* *kyllä* *ei* *alkuun* | aika *12.15* | lämpö *120*
+
+
+==============================================================
+
+ Käskyllä "apua" saat pääkäskyt. 
+* Mikäli yritit antaa ajankohdan, tulee sen olla jossain seuraavista muodoista:
+    0700 TAI 700 TAI 07:00 TAI 7:00 TAI 07.00 TAI 7.00
+* Mikäli yritit antaa lämpötilan, pitää sen olla muotoa: 50 TAI 200
+* Mikäli yritit laittaa laitteen päälle, pitää käskyn olla muotoa:
+    päälle TAI k TAI kyllä tai joo (isoilla kirjaimilla ei ole väliä)
+* Mikäli yritit laittaa laitteen pois päältä, pitää käskyn olla muotoa:
+    sammuta TAI e TAI ei TAI pois TAI älä (isoilla kirjaimilla ei ole väliä)
+* Mikäli yritit palata alkuun, pitää käskyn olla muotoa:
+    lopeta TAI palaa TAI alkuun (isoilla kirjaimilla ei ole väliä)"""
