@@ -244,7 +244,7 @@ class DoorGuard:
 
     def status(self):
         if (self.isOn):
-            return "Ovivahti päällä"
+            return "Ovivahti on päällä. Sammuta komennolla *sammuta*."
         else:
             return "Ovivahti pois päältä. Laitetaanko se päälle?"
 
