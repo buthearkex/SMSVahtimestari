@@ -16,9 +16,9 @@ class CommandInterpreter:
     TEMPERATURE = str(uuid.uuid4())
     
     # Static lists of possible commands.
-    onOptions = ["päälle", "k", "kyllä", "joo"]
+    onOptions = ["päälle", "k", "kyllä", "joo", "laita"]
     offOptions = ["sammuta", "e", "ei", "pois", "älä"]
-    resetCommands = ["lopeta", "palaa", "alkuun"]
+    resetCommands = ["lopeta", "palaa", "alkuun", "hodor"]
     
     
     def __init__(self):
