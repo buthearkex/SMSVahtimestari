@@ -76,6 +76,8 @@ class Sauna:
             if int(self.targetTimeMin) < 10:
                 minuteStr = "0"+ str(self.targetTimeMin)
             warmAtStr = str(self.targetTimeHour) + "." + minuteStr
+            if temperature > 150:
+                return "Polttouuni lämpötilassa " + str(temperature) + " klo " + warmAtStr
             return "Sauna lämpötilassa " + str(temperature) + " klo " + warmAtStr
 
     def getCurrentTemperature(self):
