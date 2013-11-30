@@ -69,6 +69,8 @@ class Sauna:
                 minuteStr = "0"+ str(self.targetTimeMin)
 
             warmAtStr = str(totalHours) + "." + minuteStr
+            if temperature > 150:
+                return "Polttouuni ei ehdi lämmetä ajoissa, mutta lämmitys aloitetaan. Valmis " + warmAtStr
             return "Sauna ei ehdi lämmetä ajoissa, mutta lämmitys aloitetaan. Valmis " + warmAtStr
         else:
             minuteStr = str(self.targetTimeMin)
