@@ -279,7 +279,7 @@ class AirConditioning:
     def status(self):
         statusText = "Asunnon lämpötila on nyt " + str(self.currentTemperature)
         if (self.isOn):
-            statusText += " ja ilmastointi on päällä. " + ""
+            statusText += " ja ilmastointi on päällä. Sammuta ilmastointi komennolla *sammuta*."
         else:
             statusText += " ja ilmastointi ei ole päällä. " + "Laitetaanko se päälle?"
         return statusText
